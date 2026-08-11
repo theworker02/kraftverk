@@ -719,7 +719,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-agent"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "kraftverk-core",
  "kraftverk-system",
@@ -732,7 +732,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-bench"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "approx",
  "chrono",
@@ -752,7 +752,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-cli"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "anyhow",
  "chrono",
@@ -775,7 +775,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-core"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "approx",
  "chrono",
@@ -790,7 +790,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-data"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "chrono",
  "directories",
@@ -808,7 +808,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-desktop"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "anyhow",
  "axum",
@@ -830,7 +830,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-integration-tests"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "kraftverk-core",
  "kraftverk-data",
@@ -842,7 +842,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-optimizer"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "indexmap",
  "kraftverk-core",
@@ -857,7 +857,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-sdk"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "kraftverk-agent",
  "kraftverk-bench",
@@ -869,7 +869,7 @@ dependencies = [
 
 [[package]]
 name = "kraftverk-system"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "chrono",
  "hex",

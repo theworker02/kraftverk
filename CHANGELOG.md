@@ -16,6 +16,7 @@
 
 ### Changed
 - README / branding / safety clarify AMD-exclusive specialization (no AMD impersonation)
+- Windows GPU enumeration also matches display ClassGUID (in addition to Class=Display)
 
 ## 0.2.0 — Expansive Platform Phase
 
@@ -23,13 +24,16 @@
 - Crate consolidation into ≤10 crates (`system`, `optimizer`, `data`, `sdk`, `desktop`)
 - KraftBench v2: CPU scaling, compile proxy, responsiveness index, sustained windows (`--sustained`)
 - Expanded telemetry with environmental noise model (no fabricated temps/power)
-- Optimizer goals, constraints, sessions/resume, lineage, insights, objectives
-- CLI expansions, HTML/JSON reports, desktop UI, branding, CI/Pages/Release, SDK
+- Optimizer goals, constraints, sessions/resume, lineage, insights, objectives, search plugins, evidence receipts
+- CLI expansions (`doctor`, `capabilities`, `report`, `chase`, `analyze`, `receipt`, `profile *`), HTML/JSON reports
+- Desktop engineering instrument + Safety Center, branding, CI/Pages/Release, SDK facade
 
 ### Honest limitations
 - GPU benchmarks unsupported (no vendor backend)
 - Temperature/power sensors unavailable portably
 - Privileged agent remains scaffold
+- Desktop is local web UI (Tauri packaging later)
+- ε-greedy / Bayesian search plugins listed but not implemented
 
 ## 0.1.0 — Milestone 1
 

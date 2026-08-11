@@ -5,9 +5,7 @@
 #![cfg(any(test, feature = "mock-platform"))]
 
 use super::evaluate::{evaluate_from_facts, HardwareFacts};
-use super::types::{
-    Architecture, CompatibilityStatus, CpuVendor, GpuVendor, HardwareEligibility, HARDWARE_POLICY,
-};
+use super::types::{Architecture, CpuVendor, GpuVendor, HardwareEligibility};
 
 /// Injectable hardware identity for deterministic eligibility tests.
 #[derive(Debug, Clone)]
@@ -221,7 +219,9 @@ pub fn eligibility_matrix_cases() -> Vec<(&'static str, MockHardwareIdentity, bo
 mod tests {
     use super::*;
     use crate::hardware::eligibility::exit_codes::{exit_code_for, ExitCode};
-    use crate::hardware::eligibility::types::HardwareRejection;
+    use crate::hardware::eligibility::types::{
+        CompatibilityStatus, HardwareRejection, HARDWARE_POLICY,
+    };
 
     #[test]
     fn mock_platform_matrix_covers_all_combos() {

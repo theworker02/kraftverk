@@ -175,6 +175,9 @@ fn detect_gpus_windows() -> Vec<DetectedGpu> {
 
 #[cfg(windows)]
 fn detect_gpus_windows_registry() -> Vec<DetectedGpu> {
+    // Display adapters ClassGUID (4d36e968-e325-11ce-bfc1-08002be10318).
+    const DISPLAY_CLASS_GUID: &str = "{4d36e968-e325-11ce-bfc1-08002be10318}";
+
     use windows_sys::Win32::Foundation::{ERROR_SUCCESS, INVALID_HANDLE_VALUE};
     use windows_sys::Win32::System::Registry::{
         RegCloseKey, RegEnumKeyExW, RegOpenKeyExW, HKEY_LOCAL_MACHINE, KEY_READ,
@@ -258,6 +261,11 @@ fn detect_gpus_windows_registry() -> Vec<DetectedGpu> {
                 if let Some(cc) = reg_query_string(ih, "Class") {
                     // "Display" is the Windows class name for GPUs.
                     is_display = cc.eq_ignore_ascii_case("Display");
+                }
+                if !is_display {
+                    if let Some(guid) = reg_query_string(ih, "ClassGUID") {
+                        is_display = guid.eq_ignore_ascii_case(DISPLAY_CLASS_GUID);
+                    }
                 }
                 if let Some(d) = reg_query_string(ih, "DeviceDesc") {
                     // Often "@oem...;Radeon RX ..." — take after last ';'
