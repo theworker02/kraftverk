@@ -30,6 +30,24 @@ document.querySelectorAll(".nav button").forEach((btn) => {
 });
 
 async function api(path) {
+  // Tauri 2 shell (withGlobalTauri): invoke instead of fetch.
+  const invoke = window.__TAURI__?.core?.invoke;
+  if (typeof invoke === "function") {
+    if (path.startsWith("/api/history")) {
+      const u = new URL(path, "http://local");
+      const limit = Number(u.searchParams.get("limit") || 20);
+      return invoke("cmd_history", { limit });
+    }
+    const map = {
+      "/api/eligibility": "cmd_eligibility",
+      "/api/overview": "cmd_overview",
+      "/api/status": "cmd_status",
+      "/api/telemetry": "cmd_telemetry",
+      "/api/benchmark": "cmd_benchmark",
+    };
+    const cmd = map[path];
+    if (cmd) return invoke(cmd);
+  }
   const res = await fetch(path);
   return res.json();
 }

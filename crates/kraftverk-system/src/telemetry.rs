@@ -1,10 +1,12 @@
 //! Expanded telemetry: environment awareness and measurement noise model.
 //!
 //! Telemetry informs stability/safety decisions. It is never used to invent
-//! benchmark scores.
+//! benchmark scores. Temperature/power come from OS-backed sensors when present.
 
 use serde::{Deserialize, Serialize};
 use sysinfo::System;
+
+use crate::sensors;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TelemetrySnapshot {
@@ -83,13 +85,23 @@ pub fn capture_snapshot() -> TelemetrySnapshot {
     let mut notes =
         vec!["Snapshot is informational; never used to fabricate benchmark scores.".into()];
 
-    // Portable thermal/power: unavailable without vendor backends.
-    let temp_c = None;
-    let power_w = None;
-    notes.push(
-        "Temperature/power sensors: unsupported portably (no vendor backend); constraints remain unchecked."
-            .into(),
-    );
+    let sensor = sensors::read_sensors();
+    let temp_c = sensor.primary_temp_c();
+    let power_w = sensor.primary_power_w();
+    notes.extend(sensor.notes);
+    for u in &sensor.unavailable {
+        notes.push(format!("sensor unavailable: {u}"));
+    }
+    if let Some(t) = temp_c {
+        notes.push(format!(
+            "Temperature reading present ({t:.1}°C) from OS-backed sensor."
+        ));
+    }
+    if let Some(p) = power_w {
+        notes.push(format!(
+            "Power reading present ({p:.1} W) from OS-backed sensor."
+        ));
+    }
 
     TelemetrySnapshot {
         timestamp_rfc3339: chrono::Utc::now().to_rfc3339(),

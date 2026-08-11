@@ -2,6 +2,7 @@
 
 pub mod compile;
 pub mod cpu;
+pub mod gpu;
 pub mod memory;
 pub mod pool;
 pub mod realtime;
@@ -13,6 +14,7 @@ pub mod sustained;
 pub mod system;
 pub mod workload_cfg;
 
+pub use gpu::{probe_gpu_backend, run_all as run_gpu_all, GpuBackendStatus, GpuBenchResult};
 pub use runner::{run_benchmark_suite, run_suite_samples, BenchProgress, SuiteResult};
 pub use sustained::parse_duration_to_secs;
 pub use workload_cfg::WorkloadConfig;

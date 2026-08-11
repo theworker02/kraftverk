@@ -11,7 +11,7 @@ Suggested fine-grained crates were merged where boundaries were artificial for M
 | `kraftverk-bench` | KraftBench workloads + suite runner | — |
 | `kraftverk-optimizer` | Search strategies + profile catalog | search + profiles |
 | `kraftverk-data` | SQLite experiment store + data paths | storage |
-| `kraftverk-agent` | Privileged agent IPC types (scaffold) | — |
+| `kraftverk-agent` | Privileged agent with authenticated local IPC | — |
 | `kraftverk-cli` | User-facing binary / optimize orchestration | — |
 
 `_archive_m1_crates/` retains the pre-consolidation crate trees for reference only (not workspace members).
@@ -51,4 +51,4 @@ SQLite schema stores fingerprint, versions, OS info, candidate JSON, parent id, 
 
 ## Privilege separation
 
-M1 safe opts run in-process. `kraftverk-agent` defines request/response types for a future authenticated local IPC channel. See `docs/security.md`.
+Safe opts run in-process after `amd-only-v1` eligibility. Privileged changes (power schemes, elevated priority/affinity) go through `kraftverk-agent` over authenticated local IPC (named pipe / Unix socket; no network bind). See `docs/security.md`.

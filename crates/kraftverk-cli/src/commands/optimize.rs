@@ -32,6 +32,7 @@ pub fn run(
     max_power: Option<f64>,
     max_workers: Option<usize>,
     resume: Option<&str>,
+    strategy_id: Option<&str>,
 ) -> Result<()> {
     if !mode.supported_without_agent() {
         return Err(anyhow!(
@@ -98,8 +99,12 @@ pub fn run(
         );
     }
 
-    let mut strategy = create_search_plugin(default_plugin_for_mode(mode.as_str()), cfg.seed)?;
-    println_human(out, format!("Search plugin: {}", strategy.name()));
+    let plugin_id = strategy_id.unwrap_or_else(|| default_plugin_for_mode(mode.as_str()));
+    let mut strategy = create_search_plugin(plugin_id, cfg.seed)?;
+    println_human(
+        out,
+        format!("Search plugin: {} ({plugin_id})", strategy.name()),
+    );
     let mut best_candidate = opt_session
         .checkpoint
         .as_ref()

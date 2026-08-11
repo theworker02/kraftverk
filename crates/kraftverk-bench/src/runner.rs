@@ -9,6 +9,7 @@ use tracing::info;
 
 use crate::compile;
 use crate::cpu;
+use crate::gpu;
 use crate::memory;
 use crate::realtime;
 use crate::responsiveness;
@@ -91,11 +92,21 @@ pub fn run_benchmark_suite(cfg: &WorkloadConfig) -> Result<MeasurementSet> {
         set.push(m);
     }
 
-    // GPU: architecturally reserved — do not invent a measurement.
-    set.meta.insert(
-        "gpu".into(),
-        "unsupported (no vendor backend; scores not invented)".into(),
-    );
+    // GPU: real AMD Vulkan backend when available — never invent scores.
+    let gpu_result = gpu::run_all(cfg.seed);
+    match &gpu_result.status {
+        gpu::GpuBackendStatus::Available { device, api } => {
+            set.meta
+                .insert("gpu".into(), format!("available device={device} api={api}"));
+            for m in gpu_result.measurements {
+                set.push(m);
+            }
+        }
+        gpu::GpuBackendStatus::Unsupported { reason } => {
+            set.meta
+                .insert("gpu".into(), format!("unsupported ({reason})"));
+        }
+    }
 
     if set.measurements.is_empty() {
         return Err(Error::Benchmark("no measurements produced".into()));

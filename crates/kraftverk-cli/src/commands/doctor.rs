@@ -1,4 +1,5 @@
 use anyhow::Result;
+use kraftverk_agent::agent_connected;
 use kraftverk_system::telemetry::{capture_snapshot, environment_suitable_for_bench};
 
 use crate::engine::{open_session, VERSION};
@@ -12,6 +13,7 @@ pub fn run(out: &OutputOpts) -> Result<()> {
     let safe = session.store.safe_mode_recommended()?;
     let baseline = session.store.latest_baseline(&session.report_fingerprint)?;
     let journal_interrupted = session.journal.interrupted().is_some();
+    let agent_ok = agent_connected();
 
     let checks = vec![
         ("version", VERSION.to_string(), true),
@@ -42,31 +44,38 @@ pub fn run(out: &OutputOpts) -> Result<()> {
         ),
         (
             "temp_sensor",
-            if snap.temp_c.is_some() {
-                "available".into()
-            } else {
-                "unavailable (not fabricated)".into()
+            match snap.temp_c {
+                Some(t) => format!("available ({t:.1}°C)"),
+                None => "unavailable (not fabricated)".into(),
             },
             true,
         ),
         (
             "power_sensor",
-            if snap.power_w.is_some() {
-                "available".into()
-            } else {
-                "unavailable (not fabricated)".into()
+            match snap.power_w {
+                Some(p) => format!("available ({p:.1} W)"),
+                None => "unavailable (not fabricated)".into(),
             },
             true,
         ),
+        (
+            "privileged_agent",
+            if agent_ok {
+                "ok — authenticated IPC reachable".into()
+            } else {
+                "FAIL — not running (kraftverk agent serve)".into()
+            },
+            agent_ok,
+        ),
     ];
 
-    // Doctor is informational: missing sensors do not fail the command.
-    let _informational = checks.iter().all(|(_, _, pass)| *pass);
+    let _ = checks.iter().all(|(_, _, pass)| *pass);
 
     if out.json {
         print_json(&serde_json::json!({
             "ok": true,
             "safe_mode_recommended": safe,
+            "agent_connected": agent_ok,
             "checks": checks.iter().map(|(n,v,p)| serde_json::json!({"name": n, "value": v, "pass": p})).collect::<Vec<_>>(),
             "telemetry": snap,
         }));
@@ -80,6 +89,12 @@ pub fn run(out: &OutputOpts) -> Result<()> {
             println_human(
                 out,
                 "Recommendation: start with --mode safe after repeated failures.",
+            );
+        }
+        if !agent_ok {
+            println_human(
+                out,
+                "Privileged agent optional for Safe mode; required for elevated power schemes.",
             );
         }
     }

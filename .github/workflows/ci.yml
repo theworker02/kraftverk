@@ -26,6 +26,16 @@ jobs:
       - name: build
         run: cargo build --workspace --release
 
+  # Optional Tauri shell — does not fail the main workspace job if WebView deps are missing.
+  tauri:
+    runs-on: windows-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: check tauri-app feature
+        run: cargo check -p kraftverk-desktop --no-default-features --features tauri-app
+
   # Non-x86 targets are rejected at compile time (amd-only-v1).
   # Do not add macOS/ARM release or CI build jobs.
 

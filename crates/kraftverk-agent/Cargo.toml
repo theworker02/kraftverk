@@ -1,11 +1,15 @@
 [package]
 name = "kraftverk-agent"
-description = "Privileged agent scaffold for elevated platform modifications"
+description = "Privileged agent with authenticated local IPC for elevated platform modifications"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
 authors.workspace = true
+
+[[bin]]
+name = "kraftverk-agent"
+path = "src/bin/kraftverk-agent.rs"
 
 [dependencies]
 kraftverk-core = { workspace = true }
@@ -14,4 +18,22 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
 tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
 uuid = { workspace = true }
+rand = { workspace = true }
+sha2 = { workspace = true }
+hex = { workspace = true }
+directories = { workspace = true }
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_Storage_FileSystem",
+    "Win32_System_Pipes",
+    "Win32_System_IO",
+    "Win32_System_SystemServices",
+    "Win32_Security",
+] }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"

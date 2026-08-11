@@ -12,8 +12,9 @@ pub const BASELINE_INDEX: f64 = 10_000.0;
 /// Category weights. Must sum to 1.0.
 ///
 /// These weight *capability domains*, not raw microbenchmark averages.
-/// GPU is weight 0 until a real backend exists — including it would dilute
-/// the index with zeros/placeholders.
+/// GPU weight is 0 when no GPU measurements are present; use
+/// [`KraftIndexWeights::with_gpu`] / [`for_measurements`] when real AMD GPU
+/// benches produced scores.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct KraftIndexWeights {
     pub cpu: f64,
@@ -21,7 +22,7 @@ pub struct KraftIndexWeights {
     pub storage: f64,
     pub system: f64,
     pub realtime: f64,
-    /// Reserved; always 0.0 in Milestone 1.
+    /// Non-zero only when real GPU measurements exist.
     pub gpu: f64,
 }
 
@@ -39,6 +40,27 @@ impl Default for KraftIndexWeights {
 }
 
 impl KraftIndexWeights {
+    /// Weights when real GPU measurements are present.
+    pub fn with_gpu() -> Self {
+        Self {
+            cpu: 0.34,
+            memory: 0.17,
+            storage: 0.13,
+            system: 0.09,
+            realtime: 0.12,
+            gpu: 0.15,
+        }
+    }
+
+    /// Pick default or with_gpu based on whether any gpu-category score exists.
+    pub fn for_measurements(set: &MeasurementSet) -> Self {
+        if set.measurements.iter().any(|m| m.category == "gpu") {
+            Self::with_gpu()
+        } else {
+            Self::default()
+        }
+    }
+
     pub fn validate(&self) -> Result<()> {
         let sum = self.cpu + self.memory + self.storage + self.system + self.realtime + self.gpu;
         if (sum - 1.0).abs() > 1e-6 {

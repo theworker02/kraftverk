@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Kraftverk",
+  "version": "0.2.1",
+  "identifier": "org.kraftverk.desktop",
+  "build": {
+    "frontendDist": "ui"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Kraftverk",
+        "width": 1280,
+        "height": 800,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "withGlobalTauri": true
+  },
+  "bundle": {
+    "active": true,
+    "icon": [
+      "../../assets/icon-32.svg",
+      "../../assets/icon-128.svg",
+      "../../assets/icon-256.svg",
+      "../../assets/icon-512.svg"
+    ]
+  }
+}

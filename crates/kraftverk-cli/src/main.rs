@@ -94,6 +94,9 @@ enum Commands {
         /// Resume a previous optimize session by id (prefix ok).
         #[arg(long)]
         resume: Option<String>,
+        /// Search strategy: hill-climb, epsilon-greedy, bayesian.
+        #[arg(long)]
+        strategy: Option<String>,
     },
     /// Show current status, baseline, and active candidate.
     Status,
@@ -163,11 +166,24 @@ enum Commands {
         #[arg(long)]
         verify: Option<String>,
     },
+    /// Privileged agent (authenticated local IPC).
+    Agent {
+        #[command(subcommand)]
+        action: AgentCmd,
+    },
     /// Development helpers (feature-gated).
     Dev {
         #[command(subcommand)]
         action: DevCmd,
     },
+}
+
+#[derive(Debug, Subcommand)]
+enum AgentCmd {
+    /// Run the privileged agent server (named pipe / Unix socket). Elevate if needed.
+    Serve,
+    /// Probe whether the agent is reachable.
+    Status,
 }
 
 #[derive(Debug, Subcommand)]
@@ -217,7 +233,12 @@ impl From<ModeArg> for kraftverk_core::OptimizeMode {
 fn command_skips_hardware_gate(cmd: &Commands) -> bool {
     matches!(
         cmd,
-        Commands::Compatibility | Commands::Hardware | Commands::Amd { .. }
+        Commands::Compatibility
+            | Commands::Hardware
+            | Commands::Amd { .. }
+            | Commands::Agent {
+                action: AgentCmd::Status
+            }
     )
 }
 
@@ -271,6 +292,7 @@ fn main() {
             max_power,
             max_workers,
             resume,
+            strategy,
         } => commands::optimize::run(
             &out,
             mode.into(),
@@ -282,7 +304,15 @@ fn main() {
             max_power,
             max_workers,
             resume.as_deref(),
+            strategy.as_deref(),
         ),
+        Commands::Agent { action } => {
+            let a = match action {
+                AgentCmd::Serve => commands::agent::AgentAction::Serve,
+                AgentCmd::Status => commands::agent::AgentAction::Status,
+            };
+            commands::agent::run(&out, a)
+        }
         Commands::Status => commands::status::run(&out),
         Commands::History { limit } => commands::history::run(&out, limit),
         Commands::Explain { experiment } => commands::explain::run(&out, &experiment),

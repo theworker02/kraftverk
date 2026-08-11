@@ -1,3 +1,4 @@
+pub mod agent;
 pub mod amd;
 pub mod analyze;
 pub mod baseline;
