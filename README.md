@@ -104,8 +104,11 @@ Full policy: [docs/hardware-support.md](docs/hardware-support.md).
 | `profile` export/inspect/apply/validate/recommend | Working |
 | `report` html/json | Working |
 | `chase` / `analyze` | Working |
-| Desktop instrument UI + hardware blocker | Working |
-| Privileged agent / GPU benches | Scaffold / unsupported (honest) |
+| Desktop instrument UI + hardware blocker | Working (web UI default; Tauri via `--features tauri-app`) |
+| Privileged agent (`kraftverk agent serve`) | Working (local authenticated IPC) |
+| AMD GPU benches (Vulkan) | Working when AMD Vulkan present; else Unsupported |
+| Sensors (temp/power) | OS-backed where APIs exist; never fabricated |
+| Search: hill-climb / ε-greedy / Bayesian | Working (`optimize --strategy`) |
 
 ## Goals
 

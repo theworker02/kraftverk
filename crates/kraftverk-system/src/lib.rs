@@ -12,6 +12,7 @@ compile_error!(
 
 pub mod hardware;
 pub mod platform;
+pub mod sensors;
 pub mod telemetry;
 
 // Platform surface (primary)
@@ -28,6 +29,11 @@ pub use hardware::{
     probe_amd_capabilities, recheck_eligibility, Architecture, CompatibilityStatus, CpuVendor,
     DetectedGpu, ExitCode, GpuInfo, GpuVendor, HardwareEligibility, HardwareFacts,
     HardwareRejection, HotplugAction, MachineReport, SensorStatus, SessionGuard, HARDWARE_POLICY,
+};
+
+// Sensors
+pub use sensors::{
+    read_sensors, read_temp_and_power, SensorKind, SensorReport, SensorSample, SensorUnit,
 };
 
 // Telemetry convenience

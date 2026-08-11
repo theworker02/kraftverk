@@ -12,7 +12,7 @@ design or other sensitive vulnerabilities.
 ## Scope
 
 - Kraftverk must not invent telemetry or hide failed rollbacks.
-- Privileged operations belong behind an authenticated local agent (scaffold in 0.2).
+- Privileged operations belong behind an authenticated local agent (named pipe / Unix socket + token handshake).
 - Storage benchmarks must never write to user Documents/Desktop paths.
 - Hardware eligibility (`amd-only-v1`) is a safety and product boundary — bypasses are out of scope for “fixes.”
 

@@ -1,6 +1,6 @@
 [package]
 name = "kraftverk-desktop"
-description = "Kraftverk desktop instrument (local UI sharing CLI backend/DB)"
+description = "Kraftverk desktop instrument (Tauri app + optional local web UI)"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -10,6 +10,17 @@ authors.workspace = true
 [[bin]]
 name = "kraftverk-desktop"
 path = "src/main.rs"
+
+[features]
+default = ["web-server"]
+# Local axum UI (no WebView SDK required) — used by default CI/workspace builds.
+web-server = ["dep:axum", "dep:tower-http", "dep:tokio", "dep:open"]
+# Native desktop shell. Requires platform WebView deps; see DEVELOPMENT.md.
+# Not enabled by default so `cargo build --workspace` succeeds on headless CI.
+tauri-app = ["dep:tauri", "dep:tauri-build"]
+
+[build-dependencies]
+tauri-build = { version = "2", optional = true, features = [] }
 
 [dependencies]
 kraftverk-sdk = { workspace = true }
@@ -24,7 +35,9 @@ serde_json = { workspace = true }
 chrono = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
-tokio = { version = "1", features = ["rt-multi-thread", "macros", "net"] }
-axum = "0.7"
-tower-http = { version = "0.5", features = ["fs", "cors"] }
-open = "5"
+
+axum = { version = "0.7", optional = true }
+tower-http = { version = "0.5", optional = true, features = ["fs", "cors"] }
+tokio = { version = "1", optional = true, features = ["rt-multi-thread", "macros", "net"] }
+open = { version = "5", optional = true }
+tauri = { version = "2", optional = true, features = [] }

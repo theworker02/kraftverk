@@ -7,6 +7,10 @@ license.workspace = true
 rust-version.workspace = true
 authors.workspace = true
 
+[features]
+default = ["gpu"]
+gpu = ["dep:ash", "dep:libloading"]
+
 [dependencies]
 kraftverk-core = { workspace = true }
 kraftverk-system = { workspace = true }
@@ -21,6 +25,12 @@ tempfile = { workspace = true }
 rand = { workspace = true }
 rand_chacha = { workspace = true }
 chrono = { workspace = true }
+ash = { version = "0.38", optional = true, default-features = false, features = ["loaded", "std"] }
+libloading = { version = "0.8", optional = true }
+
+[build-dependencies]
+naga = { version = "24", default-features = false, features = ["wgsl-in", "spv-out"] }
+bytemuck = "1"
 
 [dev-dependencies]
 approx = "0.5"

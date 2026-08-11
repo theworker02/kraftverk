@@ -112,17 +112,32 @@ pub fn inspect_machine(version: &str) -> MachineReport {
 
     let gpus = detect_gpus();
     let eligibility = evaluate_eligibility();
-    let temperature = SensorStatus::Unsupported {
-        reason: "Hardware temperature sensors are not exposed portably; use OS tools if needed."
-            .into(),
+    let sensor = crate::sensors::read_sensors();
+    let temperature = match sensor.primary_temp_c() {
+        Some(_) => SensorStatus::Available,
+        None => {
+            let reason = sensor
+                .unavailable
+                .iter()
+                .find(|u| u.to_ascii_lowercase().contains("temp"))
+                .cloned()
+                .unwrap_or_else(|| {
+                    "Temperature sensors unavailable on this host (not fabricated)".into()
+                });
+            SensorStatus::Unavailable { reason }
+        }
     };
 
     let mut unsupported = vec![
-        "CPU package temperature (no portable sensor backend)".into(),
-        "GPU clocks / utilization (no vendor backend in M1)".into(),
         "FAN RPM".into(),
-        "Power draw (watts)".into(),
+        "GPU clocks / utilization (vendor SDK)".into(),
     ];
+    if sensor.primary_temp_c().is_none() {
+        unsupported.push("CPU package temperature (no readable OS sensor)".into());
+    }
+    if sensor.primary_power_w().is_none() {
+        unsupported.push("Power draw (watts) — no readable OS counter".into());
+    }
     if gpus.iter().all(|g| {
         matches!(
             g.status,

@@ -3,11 +3,14 @@
 use kraftverk_core::error::{Error, Result};
 
 use crate::hill_climb::HillClimbStrategy;
+use crate::search::{BayesianStrategy, EpsilonGreedyStrategy};
 use crate::strategy::SearchStrategy;
 
 /// Built-in plugin identifiers.
 pub const PLUGIN_HILL_CLIMB: &str = "hill-climb";
 pub const PLUGIN_SAFE_HILL_CLIMB: &str = "safe-hill-climb";
+pub const PLUGIN_EPSILON_GREEDY: &str = "epsilon-greedy";
+pub const PLUGIN_BAYESIAN: &str = "bayesian";
 
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct SearchPluginInfo {
@@ -33,16 +36,16 @@ pub fn list_search_plugins() -> Vec<SearchPluginInfo> {
             notes: "Same as hill-climb; default for Safe mode.".into(),
         },
         SearchPluginInfo {
-            id: "epsilon-greedy".into(),
+            id: PLUGIN_EPSILON_GREEDY.into(),
             name: "ε-greedy".into(),
-            available: false,
-            notes: "Planned Milestone 2 — not registered in 0.2.".into(),
+            available: true,
+            notes: "Multi-armed bandit over discrete arms; configurable decaying ε.".into(),
         },
         SearchPluginInfo {
-            id: "bayesian".into(),
+            id: PLUGIN_BAYESIAN.into(),
             name: "Bayesian optimization".into(),
-            available: false,
-            notes: "Planned Milestone 2 — not registered in 0.2.".into(),
+            available: true,
+            notes: "GP surrogate + Expected Improvement over numeric thread params.".into(),
         },
     ]
 }
@@ -53,6 +56,10 @@ pub fn create_search_plugin(id: &str, seed: u64) -> Result<Box<dyn SearchStrateg
         PLUGIN_HILL_CLIMB | PLUGIN_SAFE_HILL_CLIMB | "default" => {
             Ok(Box::new(HillClimbStrategy::new(seed)))
         }
+        PLUGIN_EPSILON_GREEDY | "epsilon_greedy" | "egreedy" => {
+            Ok(Box::new(EpsilonGreedyStrategy::new(seed)))
+        }
+        PLUGIN_BAYESIAN | "bo" => Ok(Box::new(BayesianStrategy::new(seed))),
         other => Err(Error::InvalidConfig(format!(
             "search plugin '{other}' is unavailable; try: {}",
             list_search_plugins()
@@ -84,7 +91,10 @@ mod tests {
     }
 
     #[test]
-    fn rejects_unavailable() {
-        assert!(create_search_plugin("bayesian", 1).is_err());
+    fn creates_epsilon_and_bayesian() {
+        let e = create_search_plugin(PLUGIN_EPSILON_GREEDY, 1).unwrap();
+        assert_eq!(e.name(), "epsilon_greedy");
+        let b = create_search_plugin(PLUGIN_BAYESIAN, 1).unwrap();
+        assert_eq!(b.name(), "bayesian");
     }
 }
