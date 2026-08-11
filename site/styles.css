@@ -1,0 +1,75 @@
+:root {
+  --bg: #0b0e11;
+  --fg: #e8eef4;
+  --muted: #8b9aab;
+  --accent: #3d9a8b;
+  --line: #243040;
+  --font: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--fg);
+  background:
+    radial-gradient(1000px 520px at 15% -5%, #1a2a2e 0%, transparent 55%),
+    radial-gradient(800px 480px at 90% 0%, #182232 0%, transparent 50%),
+    var(--bg);
+  line-height: 1.55;
+}
+a { color: var(--accent); }
+.hero {
+  min-height: 92vh;
+  display: grid;
+  place-items: center;
+  padding: 3rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.hero-inner { max-width: 40rem; text-align: left; }
+.mark { display: block; margin-bottom: 1.25rem; }
+h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 8vw, 4.6rem);
+  letter-spacing: -0.04em;
+  font-weight: 600;
+  line-height: 1.02;
+}
+.tag {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0.85rem 0 1rem;
+}
+.lede { color: var(--muted); font-size: 1.1rem; max-width: 34rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.75rem; }
+.cta a {
+  text-decoration: none;
+  padding: 0.7rem 1.1rem;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  color: var(--fg);
+}
+.cta a.primary { background: rgba(61,154,139,0.16); border-color: var(--accent); color: var(--fg); }
+.cta a:hover { border-color: var(--accent); }
+section { max-width: 44rem; margin: 0 auto; padding: 3rem 1.25rem; border-bottom: 1px solid var(--line); }
+h2 { letter-spacing: -0.02em; font-weight: 550; }
+.loop { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; padding: 0; list-style: none; }
+.loop li {
+  border-top: 1px solid var(--line);
+  padding: 0.7rem 0 0.2rem;
+  font-family: var(--mono);
+  font-size: 0.92rem;
+}
+.cascade { font-family: var(--mono); color: var(--muted); display: grid; gap: 0.45rem; }
+.fine { color: var(--muted); font-size: 0.9rem; }
+pre {
+  background: #12171d;
+  border: 1px solid var(--line);
+  padding: 1rem;
+  overflow: auto;
+  border-radius: 8px;
+}
+code { font-family: var(--mono); font-size: 0.9rem; }
+footer { max-width: 44rem; margin: 0 auto; padding: 2rem 1.25rem 3rem; color: var(--muted); }

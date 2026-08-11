@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hardware Support — Kraftverk</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <section>
+    <p><a href="./">← Docs</a> · <a href="../">Kraftverk</a></p>
+    <h1>Hardware Support</h1>
+    <p>Kraftverk is an <strong>AMD-exclusive</strong> performance platform (policy <code>amd-only-v1</code>). This is a hard gate.</p>
+    <h2>Supported</h2>
+    <ul>
+      <li>Architecture: x86 / x86_64</li>
+      <li>CPU: AMD (<code>AuthenticAMD</code>)</li>
+      <li>GPU: AMD-only when present (PCI <code>0x1002</code>); no GPU is allowed</li>
+    </ul>
+    <h2>Blocked (exit codes)</h2>
+    <ul>
+      <li><code>20</code> unsupported architecture</li>
+      <li><code>21</code> Intel CPU</li>
+      <li><code>22</code> NVIDIA GPU</li>
+      <li><code>23</code> Intel GPU</li>
+      <li><code>24</code> unknown CPU vendor</li>
+      <li><code>25</code> unsupported combination</li>
+    </ul>
+    <p>Full details: <a href="https://github.com/theworker02/kraftverk/blob/main/docs/hardware-support.md">docs/hardware-support.md</a></p>
+    <p class="muted">Independent open-source project — not affiliated with Advanced Micro Devices, Inc. AMD is a trademark of Advanced Micro Devices, Inc.</p>
+  </section>
+</body>
+</html>

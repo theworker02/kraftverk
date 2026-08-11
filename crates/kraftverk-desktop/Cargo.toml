@@ -1,0 +1,30 @@
+[package]
+name = "kraftverk-desktop"
+description = "Kraftverk desktop instrument (local UI sharing CLI backend/DB)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "kraftverk-desktop"
+path = "src/main.rs"
+
+[dependencies]
+kraftverk-sdk = { workspace = true }
+kraftverk-core = { workspace = true }
+kraftverk-system = { workspace = true }
+kraftverk-data = { workspace = true }
+kraftverk-bench = { workspace = true }
+kraftverk-agent = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net"] }
+axum = "0.7"
+tower-http = { version = "0.5", features = ["fs", "cors"] }
+open = "5"

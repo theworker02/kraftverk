@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kraftverk</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div id="hw-block" class="hw-block" hidden>
+    <div class="hw-block-inner">
+      <div class="brand-name">Kraftverk</div>
+      <h1>Hardware not supported</h1>
+      <p class="muted">Kraftverk is an AMD-exclusive performance platform (policy <code>amd-only-v1</code>). Optimization and benchmarking are blocked on this machine.</p>
+      <pre id="hw-block-detail" class="mono"></pre>
+      <p class="muted">Inspect-only CLI still works: <code>kraftverk compatibility</code> · <code>kraftverk hardware</code></p>
+      <p class="disclaimer">Kraftverk is an independent open-source project focused on AMD systems. It is not affiliated with, endorsed by, or sponsored by Advanced Micro Devices, Inc. AMD is a trademark of Advanced Micro Devices, Inc.</p>
+    </div>
+  </div>
+  <div class="shell" id="app-shell">
+    <aside class="nav">
+      <div class="brand">
+        <img src="/static/mark.svg" alt="" width="28" height="28" />
+        <div>
+          <div class="brand-name">Kraftverk</div>
+          <div class="brand-sub">AMD-exclusive engineering</div>
+        </div>
+      </div>
+      <nav>
+        <button data-view="overview" class="active">Overview</button>
+        <button data-view="benchmark">Benchmark</button>
+        <button data-view="optimize">Optimize</button>
+        <button data-view="experiments">Experiments</button>
+        <button data-view="profiles">Profiles</button>
+        <button data-view="telemetry">Telemetry</button>
+        <button data-view="reports">Reports</button>
+        <button data-view="system">System</button>
+        <button data-view="settings">Settings</button>
+        <button data-view="safety">Safety Center</button>
+      </nav>
+      <p class="nav-note">Same local DB as the CLI. Evidence only. Policy amd-only-v1.</p>
+    </aside>
+    <main>
+      <header class="top">
+        <h1 id="view-title">Overview</h1>
+        <div id="status-pill" class="pill">connecting…</div>
+      </header>
+      <section id="view" class="view"></section>
+    </main>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

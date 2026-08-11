@@ -1,0 +1,16 @@
+﻿[package]
+name = "kraftverk-sdk"
+description = "Stable facade re-exports for Kraftverk integrations"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[dependencies]
+kraftverk-core = { workspace = true }
+kraftverk-system = { workspace = true }
+kraftverk-bench = { workspace = true }
+kraftverk-optimizer = { workspace = true }
+kraftverk-data = { workspace = true }
+kraftverk-agent = { workspace = true }
