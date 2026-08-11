@@ -3,9 +3,15 @@ name = "kraftverk-desktop"
 description = "Kraftverk desktop instrument (Tauri app + optional local web UI)"
 version.workspace = true
 edition.workspace = true
-license.workspace = true
 rust-version.workspace = true
 authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+keywords.workspace = true
+categories.workspace = true
+license-file = "../../LICENSE"
+readme = "../../README.md"
 
 [[bin]]
 name = "kraftverk-desktop"
