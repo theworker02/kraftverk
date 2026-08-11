@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Statistics — Kraftverk Docs</title>
+  <meta name="description" content="Kraftverk statistics: sample summaries, comparison classes, confidence intervals, and honest decision aids." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/docs/statistics.html" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../"><img src="../assets/mark.svg" width="28" height="28" alt="" /><span>Kraftverk</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav"><a href="./">Docs</a><a href="../download/">Download</a><a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a></nav>
+  </header>
+  <div class="docs-shell page-enter">
+    <aside class="docs-nav" aria-label="Docs">
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="./">Hub</a></li>
+        <li><a href="benchmark.html">KraftBench</a></li>
+        <li><a href="optimizer.html">Optimizer</a></li>
+        <li><a href="statistics.html" aria-current="page">Statistics</a></li>
+        <li><a href="kraft-index.html">Kraft Index</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="telemetry.html">Telemetry</a></li>
+        <li><a href="hardware-support.html">Hardware</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="contributing.html">Contributing</a></li>
+      </ul>
+    </aside>
+    <article class="docs-main">
+      <p class="crumb"><a href="./">Docs</a> / Statistics</p>
+      <h1>Statistics</h1>
+      <p>Kraftverk treats statistics as <strong>decision aids</strong> with transparent defaults — not as a lab coat for marketing claims.</p>
+
+      <h2>Per-sample summary</h2>
+      <p>For a numeric vector of Kraft Index (or category) samples, Kraftverk records:</p>
+      <ul>
+        <li><code>n</code>, mean, median, min, max</li>
+        <li>Variance, standard deviation, coefficient of variation (CoV)</li>
+        <li>Percentiles: p10 / p25 / p75 / p90 / p95</li>
+        <li>Approximate mean confidence interval</li>
+        <li>IQR outlier count</li>
+      </ul>
+
+      <h2>Comparison classes</h2>
+      <p>Comparing candidate vs baseline (higher-is-better Kraft Index samples):</p>
+      <table class="data">
+        <thead>
+          <tr><th>Class</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>CONFIRMED_IMPROVEMENT</code></td><td>CIs separated; ≥ ~3% and candidate CI above baseline</td></tr>
+          <tr><td><code>LIKELY_IMPROVEMENT</code></td><td>Positive shift without full confirmation</td></tr>
+          <tr><td><code>NO_SIGNIFICANT_CHANGE</code></td><td>Overlap / below indifference threshold</td></tr>
+          <tr><td><code>LIKELY_REGRESSION</code></td><td>Negative shift without full confirmation</td></tr>
+          <tr><td><code>CONFIRMED_REGRESSION</code></td><td>CIs separated; ≤ ~-3%</td></tr>
+          <tr><td><code>UNSTABLE_RESULT</code></td><td>High CoV or too few samples</td></tr>
+        </tbody>
+      </table>
+      <p>Defaults: 95% CI (z≈1.96), indifference 0.5%, outlier IQR k=1.5.</p>
+
+      <h2>How the optimizer uses this</h2>
+      <p>Search may track provisional improvements. Acceptance after validation requires stability <code>PASS</code> plus a <code>LIKELY_*</code> or <code>CONFIRMED_*</code> improvement class. High variance becomes <code>UNSTABLE_RESULT</code> / stability FAIL → reject.</p>
+      <pre><code>kraftverk compare &lt;a&gt; &lt;b&gt;
+kraftverk explain &lt;experiment-id&gt;</code></pre>
+
+      <h2>Honesty</h2>
+      <p>Small N and non-normal benches mean classifications are <strong>not</strong> formal hypothesis tests. Milestone work prioritizes transparency over pretending lab-grade inferential statistics. If the data is noisy, Kraftverk says so.</p>
+      <p class="note">Do not treat a single short run as gospel across machines, suite versions, or background load. Fingerprints and suite versions matter.</p>
+    </article>
+  </div>
+  <footer class="site-footer"><div class="footer-legal"><p>Copyright © <span data-year>2026</span> theworker02 · Proprietary · <a href="https://github.com/theworker02/kraftverk/blob/main/docs/statistics.md">Source</a></p></div></footer>
+  <script src="../site.js" defer></script>
+</body>
+</html>

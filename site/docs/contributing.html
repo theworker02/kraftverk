@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contributing — Kraftverk Docs</title>
+  <meta name="description" content="Contribute to Kraftverk under proprietary terms: evidence rules, AMD gate, conventional commits, security reporting." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/docs/contributing.html" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../"><img src="../assets/mark.svg" width="28" height="28" alt="" /><span>Kraftverk</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav"><a href="./">Docs</a><a href="../download/">Download</a><a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a></nav>
+  </header>
+  <div class="docs-shell page-enter">
+    <aside class="docs-nav" aria-label="Docs">
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="./">Hub</a></li>
+        <li><a href="benchmark.html">KraftBench</a></li>
+        <li><a href="optimizer.html">Optimizer</a></li>
+        <li><a href="statistics.html">Statistics</a></li>
+        <li><a href="kraft-index.html">Kraft Index</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="telemetry.html">Telemetry</a></li>
+        <li><a href="hardware-support.html">Hardware</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="contributing.html" aria-current="page">Contributing</a></li>
+      </ul>
+    </aside>
+    <article class="docs-main">
+      <p class="crumb"><a href="./">Docs</a> / Contributing</p>
+      <h1>Contributing</h1>
+      <p>Thanks for helping Kraftverk stay honest and evidence-driven.</p>
+
+      <h2>License reminder</h2>
+      <p>Kraftverk is <strong>proprietary</strong> software owned by <strong>theworker02</strong>. It is not MIT/Apache-licensed. See the <a href="https://github.com/theworker02/kraftverk/blob/main/LICENSE">LICENSE</a>.</p>
+      <p>By submitting a contribution (PR, patch, or suggestion), you grant the Copyright Holder rights to include it under the project’s proprietary terms. Opening a PR does <strong>not</strong> re-license the project or authorize third parties to redistribute modified versions.</p>
+
+      <h2>Rules of the road</h2>
+      <ol>
+        <li><strong>Evidence only</strong> — never invent telemetry, benchmark scores, or “boost” claims.</li>
+        <li>Prefer measured improvements or better instrumentation for decisions.</li>
+        <li>Keep the first-party crate count ≤ 10 (merge modules instead of adding crates).</li>
+        <li>Safe changes must be reversible and journaled.</li>
+        <li>Preserve <code>amd-only-v1</code> hardware enforcement — do not weaken the gate.</li>
+        <li>Use conventional commits: <code>feat</code>, <code>fix</code>, <code>chore</code>, <code>docs</code>, <code>refactor</code>, <code>test</code>.</li>
+        <li>Follow the <a href="https://github.com/theworker02/kraftverk/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>.</li>
+      </ol>
+
+      <h2>Workflow</h2>
+      <pre><code>cargo fmt --all
+cargo clippy --workspace --all-targets
+cargo test --workspace --features kraftverk-system/mock-platform</code></pre>
+      <p>Open a focused PR with a short summary and test plan. Discuss larger design changes in an issue first when possible.</p>
+
+      <h2>Security</h2>
+      <p>Open a <strong>private</strong> GitHub security advisory on <a href="https://github.com/theworker02/kraftverk">theworker02/kraftverk</a>, or contact <a href="https://github.com/theworker02">@theworker02</a> directly. Do not file public issues for privilege-escalation paths in the agent IPC design.</p>
+      <p><a href="https://github.com/theworker02/kraftverk/blob/main/SECURITY.md">SECURITY.md</a> · <a href="https://github.com/sponsors/theworker02">Sponsors</a> · <a href="https://thanks.dev/u/gh/theworker02">thanks.dev</a></p>
+    </article>
+  </div>
+  <footer class="site-footer"><div class="footer-legal"><p>Copyright © <span data-year>2026</span> theworker02 · Proprietary · <a href="https://github.com/theworker02/kraftverk/blob/main/CONTRIBUTING.md">Source</a></p></div></footer>
+  <script src="../site.js" defer></script>
+</body>
+</html>

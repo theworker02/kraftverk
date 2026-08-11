@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KraftBench — Kraftverk Docs</title>
+  <meta name="description" content="KraftBench runs real deterministic workloads. Categories, methodology, storage safety, reproducibility, and honest non-claims." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/docs/benchmark.html" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../"><img src="../assets/mark.svg" width="28" height="28" alt="" /><span>Kraftverk</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav">
+      <a href="./">Docs</a>
+      <a href="../download/">Download</a>
+      <a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a>
+    </nav>
+  </header>
+  <div class="docs-shell page-enter">
+    <aside class="docs-nav" aria-label="Docs">
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="./">Hub</a></li>
+        <li><a href="benchmark.html" aria-current="page">KraftBench</a></li>
+        <li><a href="optimizer.html">Optimizer</a></li>
+        <li><a href="statistics.html">Statistics</a></li>
+        <li><a href="kraft-index.html">Kraft Index</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="telemetry.html">Telemetry</a></li>
+        <li><a href="hardware-support.html">Hardware</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="contributing.html">Contributing</a></li>
+      </ul>
+    </aside>
+    <article class="docs-main">
+      <p class="crumb"><a href="./">Docs</a> / KraftBench</p>
+      <h1>KraftBench</h1>
+      <p>KraftBench is Kraftverk’s measurement engine. It runs <strong>real</strong> deterministic workloads. Scores come from wall-clock timing of completed work, with checksums where practical — not synthetic marketing meters.</p>
+
+      <h2>Why it exists</h2>
+      <p>Optimization without measurement is theater. KraftBench gives the optimizer (and you) a repeatable suite so “better” means higher category scores under documented conditions, not vibes.</p>
+
+      <h2>Categories</h2>
+      <table class="data">
+        <thead>
+          <tr><th>Category</th><th>Benches</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CPU</td><td>Integer single/multi, float, hashing, compression</td><td>Multi uses configured worker/rayon pool</td></tr>
+          <tr><td>Memory</td><td>Sequential R/W proxy, random chase, allocation</td><td>Proxies — not JEDEC bandwidth certs</td></tr>
+          <tr><td>Storage</td><td>Seq/rand read/write</td><td><strong>Only</strong> under Kraftverk scratch dir</td></tr>
+          <tr><td>System</td><td>Thread create, barrier sync, wake latency</td><td>Scheduler proxies</td></tr>
+          <tr><td>Realtime</td><td>File pipeline, parallel reduce, parse</td><td>In-memory “real world” stand-ins</td></tr>
+          <tr><td>GPU</td><td>—</td><td><strong>Unsupported</strong> in current milestones (architecture reserved)</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Methodology</h2>
+      <ol>
+        <li>Optional warm-up iterations (discarded)</li>
+        <li>N timed suite samples</li>
+        <li>Per-measurement higher-is-better orientation</li>
+        <li>Kraft Index from category geometric means + documented weights</li>
+        <li>Baseline normalizes mean raw composite → <strong>10,000</strong></li>
+      </ol>
+      <pre><code>kraftverk baseline
+kraftverk benchmark
+kraftverk benchmark --sustained 10m</code></pre>
+      <p class="fine">KraftBench v2 also includes CPU scaling, compile proxy, responsiveness, and sustained windows.</p>
+
+      <h2>Storage safety</h2>
+      <p>Storage benches write only under the platform data directory’s <code>/bench_scratch</code> path, marked with <code>.kraftverk_bench_scratch</code>. Kraftverk refuses obvious user content roots (Documents / Desktop / Downloads).</p>
+
+      <h2>Reproducibility</h2>
+      <ul>
+        <li>Seeded PRNGs (<code>ChaCha8</code>) for data generation</li>
+        <li>Workload sizes fixed in code for Milestone 1 baselines</li>
+        <li>Parallelism controlled via <code>bench.worker_threads</code> / <code>bench.rayon_threads</code></li>
+      </ul>
+
+      <h2>What we do not claim</h2>
+      <ul>
+        <li>Absolute FLOPS or STREAM bandwidth equivalence</li>
+        <li>Cross-machine ranking without identical suite versions</li>
+        <li>GPU performance (no backend yet)</li>
+      </ul>
+      <p class="note">Honesty over hype: proxies are labeled as proxies. If a sensor or backend is missing, Kraftverk says so instead of inventing numbers.</p>
+
+      <h2>Related</h2>
+      <p><a href="kraft-index.html">Kraft Index</a> · <a href="statistics.html">Statistics</a> · <a href="optimizer.html">Optimizer</a></p>
+    </article>
+  </div>
+  <footer class="site-footer"><div class="footer-legal"><p>Copyright © <span data-year>2026</span> theworker02 · Proprietary · <a href="https://github.com/theworker02/kraftverk/blob/main/docs/benchmarking.md">Source</a></p></div></footer>
+  <script src="../site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Download — Kraftverk</title>
+  <meta name="description" content="Install Kraftverk on Windows or Linux x86_64 with an AMD CPU. Release binaries, checksums note, and hardware preflight." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/download/" />
+  <meta property="og:title" content="Download — Kraftverk" />
+  <meta property="og:description" content="Install Kraftverk for AMD x86_64 Windows and Linux." />
+  <meta property="og:url" content="https://theworker02.github.io/kraftverk/download/" />
+  <meta property="og:image" content="https://theworker02.github.io/kraftverk/assets/logo.svg" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../">
+      <img src="../assets/mark.svg" width="28" height="28" alt="" />
+      <span>Kraftverk</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav">
+      <a href="../#philosophy">Philosophy</a>
+      <a href="../docs/">Docs</a>
+      <a href="./" aria-current="page">Download</a>
+      <a class="nav-cta" href="https://github.com/theworker02/kraftverk/releases">Releases</a>
+    </nav>
+  </header>
+
+  <main class="page-enter">
+    <section class="section section-narrow">
+      <p class="section-label">Download</p>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3rem);letter-spacing:-0.035em;margin:0 0 0.75rem">Install Kraftverk</h1>
+      <p class="lead">Official binaries ship for <strong>x86_64 Windows</strong> and <strong>x86_64 Linux</strong> only, and require an <strong>AMD CPU</strong> under policy <code>amd-only-v1</code>.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/theworker02/kraftverk/releases/latest">Latest GitHub Release</a>
+        <a class="btn btn-ghost" href="https://github.com/theworker02/kraftverk/releases">All releases</a>
+      </div>
+    </section>
+
+    <section class="section section-narrow reveal">
+      <p class="section-label">Preflight</p>
+      <h2>Hardware check before you install</h2>
+      <p>Kraftverk will refuse to run optimize/benchmark paths on unsupported hardware. Exit codes <code>20–25</code> mean the gate blocked execution — that is intentional.</p>
+      <div class="hw-grid">
+        <div class="hw-panel ok">
+          <h3>You need</h3>
+          <ul>
+            <li>x86_64 Windows or Linux</li>
+            <li>AMD CPU (<code>AuthenticAMD</code>)</li>
+            <li>No GPU, or AMD GPU only (PCI <code>0x1002</code>)</li>
+          </ul>
+        </div>
+        <div class="hw-panel blocked">
+          <h3>Will not run</h3>
+          <ul>
+            <li>Intel CPU hosts</li>
+            <li>NVIDIA or Intel GPU present</li>
+            <li>ARM / non-x86 machines</li>
+          </ul>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:1rem">Inspect without the gate after install: <code>kraftverk compatibility</code>, <code>kraftverk hardware</code>.</p>
+      <p><a href="../docs/hardware-support.html">Hardware support details →</a></p>
+    </section>
+
+    <section class="section section-narrow reveal">
+      <p class="section-label">Platforms</p>
+      <h2>Install instructions</h2>
+      <div class="os-tabs" role="tablist" aria-label="Operating system">
+        <button type="button" role="tab" aria-selected="true" data-panel="panel-win">Windows</button>
+        <button type="button" role="tab" aria-selected="false" data-panel="panel-linux">Linux</button>
+        <button type="button" role="tab" aria-selected="false" data-panel="panel-source">From source</button>
+      </div>
+
+      <div class="os-panel" id="panel-win" role="tabpanel">
+        <h3>Windows (x86_64)</h3>
+        <ol>
+          <li>Open the <a href="https://github.com/theworker02/kraftverk/releases/latest">latest release</a> and download the Windows asset (zip or installer published for that tag).</li>
+          <li>Verify checksums when the release notes publish digests (see note below).</li>
+          <li>Extract or install to a writable directory. Prefer a path without unexpected ACL restrictions.</li>
+          <li>Open a terminal in that directory (or add it to <code>PATH</code>) and run:</li>
+        </ol>
+        <pre><code>kraftverk compatibility
+kraftverk hardware
+kraftverk inspect
+kraftverk baseline</code></pre>
+        <p class="fine">Desktop instrument (when packaged in the release): launch <code>kraftverk-desktop</code> — it shares the local experiment DB with the CLI.</p>
+      </div>
+
+      <div class="os-panel" id="panel-linux" role="tabpanel" hidden>
+        <h3>Linux (x86_64)</h3>
+        <ol>
+          <li>Download the Linux x86_64 asset from the <a href="https://github.com/theworker02/kraftverk/releases/latest">latest release</a>.</li>
+          <li>Verify checksums when published with the release.</li>
+          <li>Make the binary executable and place it on your <code>PATH</code>:</li>
+        </ol>
+        <pre><code>chmod +x kraftverk
+./kraftverk compatibility
+./kraftverk hardware
+./kraftverk inspect
+./kraftverk baseline</code></pre>
+        <p class="fine">Safe optimize uses best-effort nice / affinity APIs. Some process priority changes may require elevated privileges depending on your distro policy.</p>
+      </div>
+
+      <div class="os-panel" id="panel-source" role="tabpanel" hidden>
+        <h3>Build from source</h3>
+        <p>Requires a recent Rust toolchain. From a clone of the repository:</p>
+        <pre><code>cargo build --release -p kraftverk-cli
+cargo run -p kraftverk-cli -- compatibility
+cargo run -p kraftverk-cli -- baseline
+cargo run -p kraftverk-cli -- optimize --mode safe --goal balanced
+cargo run -p kraftverk-desktop</code></pre>
+        <p class="fine">See <a href="https://github.com/theworker02/kraftverk/blob/main/docs/DEVELOPMENT.md">DEVELOPMENT.md</a> for workspace details.</p>
+      </div>
+    </section>
+
+    <section class="section section-narrow reveal">
+      <p class="section-label">Integrity</p>
+      <h2>Checksums</h2>
+      <p>Treat release artifacts as untrusted until you verify them. When a release publishes SHA-256 (or similar) digests in the release notes or accompanying <code>*.sha256</code> files, verify before running:</p>
+      <pre><code># Windows (PowerShell example)
+Get-FileHash .\kraftverk-windows-x86_64.zip -Algorithm SHA256
+
+# Linux
+sha256sum kraftverk-linux-x86_64.tar.gz</code></pre>
+      <p class="note">Exact asset names vary by tag. Always match the digest published for that release. If digests are missing for a given tag, open an issue or wait for the checksums to be attached — do not invent trust.</p>
+    </section>
+
+    <section class="section section-narrow reveal">
+      <p class="section-label">First run</p>
+      <h2>Recommended first session</h2>
+      <pre><code>kraftverk doctor
+kraftverk capabilities
+kraftverk baseline
+kraftverk optimize --mode safe --goal balanced
+kraftverk report --format html
+kraftverk status</code></pre>
+      <p>If something looks wrong, restore:</p>
+      <pre><code>kraftverk restore --baseline</code></pre>
+      <p><a href="../docs/">Continue in the docs →</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-legal">
+      <p>Copyright © <span data-year>2026</span> <a href="https://github.com/theworker02">theworker02</a> · <strong>Proprietary — All Rights Reserved</strong> · <a href="https://github.com/theworker02/kraftverk/blob/main/LICENSE">LICENSE</a> · <a href="https://github.com/theworker02/kraftverk/blob/main/SECURITY.md">SECURITY</a> · <a href="https://thanks.dev/u/gh/theworker02">thanks.dev</a></p>
+      <p>Not affiliated with Advanced Micro Devices, Inc. AMD is a trademark of Advanced Micro Devices, Inc.</p>
+    </div>
+  </footer>
+  <script src="../site.js" defer></script>
+</body>
+</html>

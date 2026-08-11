@@ -4,95 +4,314 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kraftverk — evidence-driven performance engineering</title>
-  <meta name="description" content="Kraftverk is an independent AMD-focused performance platform: measure, experiment, validate, improve. Proprietary software by theworker02." />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="description" content="Kraftverk is an independent AMD-focused performance platform: measure real work, experiment with reversible settings, keep only what statistically improves. No magic buttons." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theworker02.github.io/kraftverk/" />
+  <meta property="og:title" content="Kraftverk — evidence-driven performance engineering" />
+  <meta property="og:description" content="Measure real work. Experiment with reversible settings. Keep only what statistically improves. AMD systems only." />
+  <meta property="og:image" content="https://theworker02.github.io/kraftverk/assets/logo.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Kraftverk" />
+  <meta name="twitter:description" content="Evidence-driven systems performance platform for AMD hosts." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="fine" href="#philosophy" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">Skip to content</a>
+
   <header class="top">
     <a class="brand" href="./">
-      <img src="mark.svg" width="28" height="28" alt="" />
+      <img src="assets/mark.svg" width="28" height="28" alt="" />
       <span>Kraftverk</span>
     </a>
-    <nav>
-      <a href="#loop">Loop</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav">
+      <a href="#philosophy">Philosophy</a>
+      <a href="#index">Kraft Index</a>
       <a href="#hardware">Hardware</a>
       <a href="docs/">Docs</a>
-      <a href="https://github.com/theworker02/kraftverk">GitHub</a>
+      <a href="download/">Download</a>
+      <a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a>
     </nav>
   </header>
 
   <header class="hero">
+    <div class="hero-plane" aria-hidden="true"></div>
     <div class="hero-inner">
-      <img class="mark" src="mark.svg" width="80" height="80" alt="Kraftverk mark" />
-      <p class="flagline">
-        <img src="swedish-flag.svg" width="22" height="14" alt="" />
-        <span>Swedish-inspired name · independent product</span>
-      </p>
-      <h1>Kraftverk</h1>
-      <p class="tag">Evidence-driven systems performance platform</p>
-      <p class="lede">Measure real work. Experiment with reversible settings. Keep only what statistically improves. No magic buttons.</p>
-      <div class="cta">
-        <a class="primary" href="https://github.com/theworker02/kraftverk/releases">Download</a>
-        <a class="ghost" href="docs/">Docs</a>
-        <a class="ghost" href="https://github.com/theworker02/kraftverk">GitHub</a>
+      <div class="hero-copy">
+        <p class="flagline">
+          <img src="assets/swedish-flag.svg" width="22" height="14" alt="" />
+          <span>Swedish-inspired · independent instrument</span>
+        </p>
+        <h1 class="brand-hero">Kraftverk</h1>
+        <p class="headline">No magic buttons — only measured improvement.</p>
+        <p class="lede">An evidence-driven systems performance platform for AMD hosts: measure real work, experiment with reversible settings, keep only what statistically improves.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="download/">Download</a>
+          <a class="btn btn-ghost" href="https://github.com/theworker02/kraftverk">GitHub</a>
+          <a class="btn btn-ghost" href="docs/">Docs</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="flow-frame">
+          <img src="assets/architecture-flow.svg" width="720" height="220" alt="" />
+        </div>
       </div>
     </div>
   </header>
 
-  <section id="name">
-    <h2>Name</h2>
-    <p><strong>Kraftverk</strong> is inspired by Swedish — <em>kraftverk</em> means <strong>power plant / powerhouse / power station</strong>. It is a product name only. Not affiliated with the Kingdom of Sweden or any Swedish government entity.</p>
-  </section>
+  <main class="page-enter">
+    <section class="section section-narrow reveal" id="philosophy">
+      <p class="section-label">Philosophy</p>
+      <h2>No magic buttons</h2>
+      <p class="lead">Kraftverk is a performance engineering instrument — not a PC cleaner, not a placebo FPS booster, not a cloud service. Every kept change is measured, validated, explainable, and restorable.</p>
+      <p>If a setting cannot improve measured performance, efficiency, stability, latency, thermal behavior, or the instrumentation used to decide, it does not belong in the product. No fabricated telemetry. No silent irreversible tweaks.</p>
+    </section>
 
-  <section>
-    <h2>No magic buttons</h2>
-    <p>Kraftverk is a performance engineering system, not another PC “optimizer.” Every kept change is measured, validated, explainable, and restorable.</p>
-  </section>
+    <section class="section reveal" id="compare">
+      <p class="section-label">Comparison</p>
+      <h2>Instrument vs placebo “optimizer”</h2>
+      <p>Most consumer “PC optimizers” sell certainty without evidence. Kraftverk is built the other way around.</p>
+      <div style="overflow-x:auto">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Kraftverk</th>
+              <th>Typical placebo optimizer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Evidence</td>
+              <td class="yes">Real workloads (KraftBench) + statistical compare</td>
+              <td class="no">Marketing scores, timers, or vague “boost”</td>
+            </tr>
+            <tr>
+              <td>Changes</td>
+              <td class="yes">Allow-listed, reversible, journaled</td>
+              <td class="no">Registry sweeps, cleaners, one-way tweaks</td>
+            </tr>
+            <tr>
+              <td>Honesty</td>
+              <td class="yes">Unsupported sensors marked unsupported</td>
+              <td class="no">Invented temps, FPS, or health meters</td>
+            </tr>
+            <tr>
+              <td>Hardware</td>
+              <td class="yes">Hard AMD-only gate (<code>amd-only-v1</code>)</td>
+              <td class="no">Anything that installs</td>
+            </tr>
+            <tr>
+              <td>Outcome</td>
+              <td class="yes">Keep or revert with explainable receipts</td>
+              <td class="no">Permanent “optimization” with no rollback story</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-  <section id="loop">
-    <h2>The evidence loop</h2>
-    <p class="fine">Measure → Experiment → Validate → Improve, then learn and repeat.</p>
-    <img class="diagram" src="architecture-flow.svg" width="720" height="220" alt="Architecture flow: Measure, Experiment, Validate, Improve" />
-    <ol class="loop">
-      <li>Measure</li>
-      <li>Experiment</li>
-      <li>Benchmark</li>
-      <li>Validate</li>
-      <li>Compare</li>
-      <li>Keep or Revert</li>
-      <li>Learn</li>
-      <li>Repeat</li>
-    </ol>
-  </section>
+    <section class="section reveal" id="loop">
+      <p class="section-label">Evidence loop</p>
+      <h2>Measure → Experiment → Validate → Improve</h2>
+      <p>Product framing is a closed loop. Search always rolls back during exploration; only validated accepts remain applied.</p>
+      <div class="flow-block">
+        <img class="diagram" src="assets/architecture-flow.svg" width="720" height="220" alt="Architecture flow: Measure, Experiment, Validate, Improve" />
+      </div>
+      <ul class="loop-steps">
+        <li>
+          <span class="step-n">01</span>
+          <strong>Measure</strong>
+          <span>KraftBench runs real deterministic work with checksums where practical.</span>
+        </li>
+        <li>
+          <span class="step-n">02</span>
+          <strong>Experiment</strong>
+          <span>Propose reversible parameter diffs under safe-mode allow-lists.</span>
+        </li>
+        <li>
+          <span class="step-n">03</span>
+          <strong>Validate</strong>
+          <span>Stability gates and comparison classes vs baseline samples.</span>
+        </li>
+        <li>
+          <span class="step-n">04</span>
+          <strong>Improve</strong>
+          <span>Commit what helps; restore what does not. Learn and repeat.</span>
+        </li>
+      </ul>
+      <ul class="expanded-loop" aria-label="Expanded evidence loop">
+        <li>Measure</li>
+        <li>Experiment</li>
+        <li>Benchmark</li>
+        <li>Validate</li>
+        <li>Compare</li>
+        <li>Keep or Revert</li>
+        <li>Learn</li>
+        <li>Repeat</li>
+      </ul>
+    </section>
 
-  <section id="hardware">
-    <h2>AMD hardware only</h2>
-    <p>Policy <code>amd-only-v1</code> is a hard gate: <strong>x86/x86_64</strong> + <strong>AMD CPU</strong>; GPU optional but must be AMD if present. NVIDIA/Intel GPU configurations are rejected (exit codes 20–25).</p>
-    <p class="fine">Independent product — not affiliated with or endorsed by Advanced Micro Devices, Inc. AMD is a trademark of Advanced Micro Devices, Inc. No AMD logos are used here.</p>
-    <p><a href="docs/hardware-support.html">Hardware support details →</a></p>
-  </section>
+    <section class="section reveal" id="index">
+      <p class="section-label">Kraft Index</p>
+      <h2>A composite you can explain</h2>
+      <p>The Kraft Index is a weighted blend of category scores from KraftBench. A baseline run’s mean raw composite maps to <strong>10,000</strong>; later runs are ratios against that baseline.</p>
+      <p class="note">Illustrative cascade below — weights are the documented M1 defaults. GPU weight is zero until a real backend exists (no placeholder dilution).</p>
+      <div class="cascade" aria-label="Illustrative Kraft Index category weights">
+        <div class="cascade-row">
+          <span class="cat">CPU</span>
+          <div class="cascade-bar"><i style="--w:40%"></i></div>
+          <span class="wt">0.40</span>
+        </div>
+        <div class="cascade-row">
+          <span class="cat">Memory</span>
+          <div class="cascade-bar"><i style="--w:20%"></i></div>
+          <span class="wt">0.20</span>
+        </div>
+        <div class="cascade-row">
+          <span class="cat">Storage</span>
+          <div class="cascade-bar"><i style="--w:15%"></i></div>
+          <span class="wt">0.15</span>
+        </div>
+        <div class="cascade-row">
+          <span class="cat">Realtime</span>
+          <div class="cascade-bar"><i style="--w:15%"></i></div>
+          <span class="wt">0.15</span>
+        </div>
+        <div class="cascade-row">
+          <span class="cat">System</span>
+          <div class="cascade-bar"><i style="--w:10%"></i></div>
+          <span class="wt">0.10</span>
+        </div>
+        <div class="cascade-row">
+          <span class="cat">GPU</span>
+          <div class="cascade-bar"><i style="--w:0%"></i></div>
+          <span class="wt">0.00</span>
+        </div>
+      </div>
+      <div class="cascade-result">
+        <div class="idx">Baseline → <span>10,000</span></div>
+        <p class="fine" style="margin:0.4rem 0 0">Later: <code>index = (raw / baseline_raw) × 10000</code>. Missing categories renormalize over present weights.</p>
+      </div>
+      <p style="margin-top:1.25rem"><a href="docs/kraft-index.html">Read the Kraft Index methodology →</a></p>
+    </section>
 
-  <section>
-    <h2>Get started</h2>
-    <pre><code>cargo build --release -p kraftverk-cli
-kraftverk inspect
-kraftverk baseline
-kraftverk optimize --mode safe --goal balanced
-kraftverk report --format html</code></pre>
-  </section>
+    <section class="section reveal" id="hardware">
+      <p class="section-label">Hardware</p>
+      <h2>AMD systems only</h2>
+      <p>Policy <code>amd-only-v1</code> is a hard execution gate across CLI, desktop, SDK, agent, and optimizer — not a cosmetic preference. Official binaries target <strong>x86_64 Windows</strong> and <strong>x86_64 Linux</strong>.</p>
+      <div class="hw-grid">
+        <div class="hw-panel ok">
+          <h3>Supported</h3>
+          <ul>
+            <li>Architecture: x86 / x86_64</li>
+            <li>CPU: AMD (<code>AuthenticAMD</code>)</li>
+            <li>GPU: none, or AMD only (PCI <code>0x1002</code>)</li>
+          </ul>
+        </div>
+        <div class="hw-panel blocked">
+          <h3>Blocked</h3>
+          <ul>
+            <li>Intel CPU · unknown CPU vendor</li>
+            <li>NVIDIA / Intel GPU when present</li>
+            <li>Mixed AMD+NVIDIA · non-x86 builds</li>
+            <li>Exit codes <code>20–25</code> · no production <code>--force</code></li>
+          </ul>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:1.25rem">Independent product — not affiliated with or endorsed by Advanced Micro Devices, Inc. AMD is a trademark of Advanced Micro Devices, Inc. No AMD logos are used here.</p>
+      <p><a href="docs/hardware-support.html">Full hardware support policy →</a></p>
+    </section>
 
-  <footer>
-    <p>
-      Copyright © 2026 <a href="https://github.com/theworker02">theworker02</a>
-      · <strong>Proprietary — All Rights Reserved</strong>
-      · <a href="https://github.com/theworker02/kraftverk/blob/main/LICENSE">LICENSE</a>
-      · <a href="docs/">Documentation</a>
-    </p>
-    <p class="fine">View/use as published. Modification and redistribution of modified versions require written permission.</p>
+    <section class="section reveal" id="name">
+      <p class="section-label">Etymology</p>
+      <h2>Why “Kraftverk”</h2>
+      <div class="etymology">
+        <img class="flag-lg" src="assets/swedish-flag.svg" width="56" height="36" alt="Swedish flag" />
+        <div>
+          <h3>Power plant / powerhouse</h3>
+          <p><em>Kraftverk</em> is inspired by Swedish — <em>kraftverk</em> means <strong>power plant / powerhouse / power station</strong>. It is a product name only. Not affiliated with the Kingdom of Sweden or any Swedish government entity.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="start">
+      <p class="section-label">Get started</p>
+      <h2>A clear path for newcomers</h2>
+      <p>Prefer a release binary if you want to evaluate quickly. Building from source is the same control loop.</p>
+      <div class="path">
+        <div class="path-step">
+          <div>
+            <h3>Check eligibility</h3>
+            <p>Confirm AMD-only policy before optimizing. Inspect-only commands skip the gate.</p>
+            <pre><code>kraftverk compatibility
+kraftverk hardware</code></pre>
+          </div>
+        </div>
+        <div class="path-step">
+          <div>
+            <h3>Inspect &amp; baseline</h3>
+            <p>Fingerprint the machine and establish Kraft Index 10,000.</p>
+            <pre><code>kraftverk inspect
+kraftverk baseline</code></pre>
+          </div>
+        </div>
+        <div class="path-step">
+          <div>
+            <h3>Safe optimize</h3>
+            <p>Milestone safe mode only — reversible process/bench parameters.</p>
+            <pre><code>kraftverk optimize --mode safe --goal balanced
+kraftverk report --format html
+kraftverk restore --baseline</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="cta" style="margin-top:1.5rem">
+        <a class="btn btn-primary" href="download/">Install instructions</a>
+        <a class="btn btn-ghost" href="docs/">Documentation hub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h3>Kraftverk</h3>
+        <p>Evidence-driven systems performance platform for AMD hosts. Proprietary software by theworker02.</p>
+      </div>
+      <div>
+        <h3>Product</h3>
+        <ul>
+          <li><a href="download/">Download</a></li>
+          <li><a href="docs/">Docs</a></li>
+          <li><a href="docs/hardware-support.html">Hardware support</a></li>
+          <li><a href="https://github.com/theworker02/kraftverk/releases">Releases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Project</h3>
+        <ul>
+          <li><a href="https://github.com/theworker02/kraftverk">GitHub</a></li>
+          <li><a href="https://github.com/theworker02/kraftverk/blob/main/SECURITY.md">Security</a></li>
+          <li><a href="https://github.com/sponsors/theworker02">Sponsors</a></li>
+          <li><a href="https://thanks.dev/u/gh/theworker02">thanks.dev</a></li>
+          <li><a href="https://github.com/theworker02/kraftverk/blob/main/LICENSE">License</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>Copyright © <span data-year>2026</span> <a href="https://github.com/theworker02">theworker02</a> · <strong>Proprietary — All Rights Reserved</strong>. View/use as published. Modification and redistribution of modified versions require written permission.</p>
+      <p>Kraftverk is an independent product and is <strong>not affiliated with, endorsed by, or impersonating</strong> Advanced Micro Devices, Inc. AMD is a trademark of Advanced Micro Devices, Inc. No AMD corporate logos are used on this site.</p>
+      <p>Swedish flag used only as an etymology accent for the product name — not a claim of Swedish government affiliation.</p>
+    </div>
   </footer>
+
+  <script src="site.js" defer></script>
 </body>
 </html>

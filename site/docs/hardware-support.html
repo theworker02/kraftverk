@@ -4,31 +4,149 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hardware Support — Kraftverk</title>
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <meta name="description" content="Kraftverk amd-only-v1 hardware policy: AMD CPU required, AMD GPU if present, exit codes 20–25, detection and product surfaces." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/docs/hardware-support.html" />
+  <meta property="og:title" content="Hardware Support — Kraftverk" />
+  <meta property="og:url" content="https://theworker02.github.io/kraftverk/docs/hardware-support.html" />
+  <meta property="og:image" content="https://theworker02.github.io/kraftverk/assets/logo.svg" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-  <section>
-    <p><a href="./">← Docs</a> · <a href="../">Kraftverk</a></p>
-    <h1>Hardware Support</h1>
-    <p>Kraftverk is an <strong>AMD-exclusive</strong> performance platform (policy <code>amd-only-v1</code>). This is a hard gate.</p>
-    <h2>Supported</h2>
-    <ul>
-      <li>Architecture: x86 / x86_64</li>
-      <li>CPU: AMD (<code>AuthenticAMD</code>)</li>
-      <li>GPU: AMD-only when present (PCI <code>0x1002</code>); no GPU is allowed</li>
-    </ul>
-    <h2>Blocked (exit codes)</h2>
-    <ul>
-      <li><code>20</code> unsupported architecture</li>
-      <li><code>21</code> Intel CPU</li>
-      <li><code>22</code> NVIDIA GPU</li>
-      <li><code>23</code> Intel GPU</li>
-      <li><code>24</code> unknown CPU vendor</li>
-      <li><code>25</code> unsupported combination</li>
-    </ul>
-    <p>Full details: <a href="https://github.com/theworker02/kraftverk/blob/main/docs/hardware-support.md">docs/hardware-support.md</a></p>
-    <p class="fine">Independent product by theworker02 — not affiliated with Advanced Micro Devices, Inc. AMD is a trademark of Advanced Micro Devices, Inc. No AMD corporate logos are used.</p>
-  </section>
+  <header class="top">
+    <a class="brand" href="../">
+      <img src="../assets/mark.svg" width="28" height="28" alt="" />
+      <span>Kraftverk</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav">
+      <a href="./">Docs</a>
+      <a href="../download/">Download</a>
+      <a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="docs-shell page-enter">
+    <aside class="docs-nav" aria-label="Docs">
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="./">Hub</a></li>
+        <li><a href="benchmark.html">KraftBench</a></li>
+        <li><a href="optimizer.html">Optimizer</a></li>
+        <li><a href="statistics.html">Statistics</a></li>
+        <li><a href="kraft-index.html">Kraft Index</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="telemetry.html">Telemetry</a></li>
+        <li><a href="hardware-support.html" aria-current="page">Hardware</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="contributing.html">Contributing</a></li>
+      </ul>
+    </aside>
+
+    <article class="docs-main">
+      <p class="crumb"><a href="./">Docs</a> / Hardware support</p>
+      <h1>Hardware support</h1>
+      <p>Kraftverk is an <strong>AMD-exclusive</strong> performance engineering platform. Policy <code>amd-only-v1</code> is a hard execution gate across CLI, desktop, SDK, agent, and optimizer — not a cosmetic preference.</p>
+      <p class="fine">Independent product disclaimer: Kraftverk is not affiliated with, endorsed by, or impersonating Advanced Micro Devices, Inc. “AMD” here means CPU/GPU vendor identity detected on the host (CPUID / PCI), not a partnership claim.</p>
+
+      <h2>Supported configuration</h2>
+      <table class="data">
+        <thead>
+          <tr><th>Check</th><th>Rule</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Architecture</td><td><code>x86</code> or <code>x86_64</code> only (<code>compile_error!</code> on other targets)</td></tr>
+          <tr><td>CPU vendor</td><td>AMD (<code>AuthenticAMD</code>) via CPUID</td></tr>
+          <tr><td>GPU</td><td>None → allowed; if present, <strong>all</strong> must be AMD (PCI vendor <code>0x1002</code>)</td></tr>
+          <tr><td>Blocked</td><td>Intel CPU; NVIDIA GPU (<code>0x10DE</code>); Intel GPU (<code>0x8086</code>); mixed AMD+NVIDIA; unknown vendors</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Pass examples:</strong> AMD CPU + no GPU; AMD CPU + AMD GPU(s).<br />
+      <strong>Fail examples:</strong> Intel CPU; AMD CPU + NVIDIA; AMD+NVIDIA multi-GPU; ARM/aarch64 builds.</p>
+      <p>Policy id persisted on experiments: <code>hardware_policy = "amd-only-v1"</code>.</p>
+
+      <h2>Supported vs blocked</h2>
+      <div class="hw-grid">
+        <div class="hw-panel ok">
+          <h3>Supported</h3>
+          <ul>
+            <li>x86 / x86_64</li>
+            <li>AMD CPU</li>
+            <li>No GPU or AMD GPU only</li>
+            <li>Windows &amp; Linux x86_64 releases</li>
+          </ul>
+        </div>
+        <div class="hw-panel blocked">
+          <h3>Blocked</h3>
+          <ul>
+            <li>Intel / unknown CPU</li>
+            <li>NVIDIA or Intel GPU</li>
+            <li>Mixed GPU vendors</li>
+            <li>Non-x86 architectures</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Exit codes (20–25)</h2>
+      <table class="data">
+        <thead>
+          <tr><th>Code</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>20</code></td><td>Unsupported architecture</td></tr>
+          <tr><td><code>21</code></td><td>Intel CPU detected</td></tr>
+          <tr><td><code>22</code></td><td>NVIDIA GPU detected</td></tr>
+          <tr><td><code>23</code></td><td>Intel GPU detected</td></tr>
+          <tr><td><code>24</code></td><td>Unknown CPU vendor</td></tr>
+          <tr><td><code>25</code></td><td>Unsupported combination (mixed / unknown GPU / other)</td></tr>
+        </tbody>
+      </table>
+      <p>There is <strong>no</strong> production <code>--force</code> bypass. Tests may use the <code>mock-platform</code> feature to inject hardware facts.</p>
+
+      <h2>Detection</h2>
+      <ul>
+        <li><strong>CPU:</strong> CPUID leaf 0 vendor string; Linux <code>/proc/cpuinfo</code> and sysinfo fallbacks.</li>
+        <li><strong>GPU:</strong> Windows PCI Enum registry (<code>VEN_xxxx</code>, Display class); Linux <code>/sys/bus/pci</code> class <code>0x03</code> — no <code>lspci</code> dependency.</li>
+        <li><strong>Hot-plug:</strong> optimizer / session guards re-check; NVIDIA appearance mid-session → stop, restore managed config, block.</li>
+      </ul>
+
+      <h2>Product surfaces</h2>
+      <table class="data">
+        <thead>
+          <tr><th>Surface</th><th>Behavior</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CLI</td><td>Shared pre-dispatch gate; <code>compatibility</code> / <code>hardware</code> / <code>amd …</code> are inspect-only</td></tr>
+          <tr><td>Desktop</td><td>Splash/blocker + <code>/api/eligibility</code>; gated APIs return 403 when blocked</td></tr>
+          <tr><td>SDK</td><td><code>UnsupportedHardware</code>, <code>Kraftverk::open_default()</code>, <code>require_supported_hardware()</code></td></tr>
+          <tr><td>Agent</td><td><code>PrivilegedAgent::start()</code> + re-check before apply/rollback</td></tr>
+          <tr><td>Optimizer</td><td>Session guard revalidation each search iteration</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Inspect-only CLI</h2>
+      <pre><code>kraftverk compatibility   # policy status + reasons (no gate)
+kraftverk hardware        # CPUID + PCI inventory (no gate)
+kraftverk amd cpu         # Ryzen topology hints (honest / unset when unknown)
+kraftverk amd gpu         # AMD GPU list (PCI 0x1002)</code></pre>
+
+      <h2>Release targets</h2>
+      <p>Official binaries: <strong>x86_64 Windows</strong> and <strong>x86_64 Linux</strong> only.</p>
+
+      <p class="note">AMD is a trademark of Advanced Micro Devices, Inc. Kraftverk does not use AMD logos and makes no “official AMD” claim.</p>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-legal">
+      <p>Copyright © <span data-year>2026</span> theworker02 · Proprietary · <a href="https://github.com/theworker02/kraftverk/blob/main/docs/hardware-support.md">Source markdown</a></p>
+    </div>
+  </footer>
+  <script src="../site.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Safety — Kraftverk Docs</title>
+  <meta name="description" content="Kraftverk safety: non-goals, hardware eligibility boundary, apply/verify/rollback guardrails, thermal honesty." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/docs/safety.html" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../"><img src="../assets/mark.svg" width="28" height="28" alt="" /><span>Kraftverk</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav"><a href="./">Docs</a><a href="../download/">Download</a><a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a></nav>
+  </header>
+  <div class="docs-shell page-enter">
+    <aside class="docs-nav" aria-label="Docs">
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="./">Hub</a></li>
+        <li><a href="benchmark.html">KraftBench</a></li>
+        <li><a href="optimizer.html">Optimizer</a></li>
+        <li><a href="statistics.html">Statistics</a></li>
+        <li><a href="kraft-index.html">Kraft Index</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="safety.html" aria-current="page">Safety</a></li>
+        <li><a href="telemetry.html">Telemetry</a></li>
+        <li><a href="hardware-support.html">Hardware</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="contributing.html">Contributing</a></li>
+      </ul>
+    </aside>
+    <article class="docs-main">
+      <p class="crumb"><a href="./">Docs</a> / Safety</p>
+      <h1>Safety</h1>
+      <p>Safety in Kraftverk means reversible changes, honest measurement, and hard product boundaries — not a sticker on a cleaner.</p>
+
+      <h2>Non-goals</h2>
+      <p>Kraftverk will not:</p>
+      <ul>
+        <li>Delete user files or “clean” temp folders outside its scratch dir</li>
+        <li>Apply irreversible registry/firmware tweaks casually</li>
+        <li>Disable security features</li>
+        <li>Fake improvements</li>
+        <li>Run optimize/benchmark on non-AMD or mixed NVIDIA systems (policy <code>amd-only-v1</code>)</li>
+      </ul>
+
+      <h2>Hardware eligibility boundary</h2>
+      <ul>
+        <li>Central gate in <code>kraftverk-system</code> eligibility subsystem</li>
+        <li>CLI / desktop / SDK / agent enforce independently</li>
+        <li>Hot-plug NVIDIA mid-session → stop experiments, restore managed config, block further execution</li>
+        <li>No production <code>--force</code> / <code>--ignore-hardware</code> bypass</li>
+      </ul>
+      <p><a href="hardware-support.html">Hardware support policy →</a></p>
+
+      <h2>Guardrails</h2>
+      <ul>
+        <li>Safe mode parameter allow-list only</li>
+        <li>Apply → verify → rollback with journal</li>
+        <li>Storage I/O confined to marked scratch directories</li>
+        <li>Optimizer search always rolls back; only validated accepts remain</li>
+        <li><code>kraftverk restore</code> clears active accepted config</li>
+      </ul>
+      <pre><code>kraftverk restore --baseline</code></pre>
+
+      <h2>Thermal / correctness</h2>
+      <ul>
+        <li>Temperature/power sensors unavailable portably (marked unsupported)</li>
+        <li>Checksums on many benches detect obvious incorrect results</li>
+        <li>High variance → <code>UNSTABLE_RESULT</code> / stability FAIL → reject</li>
+      </ul>
+      <p class="note">Security reporting: see <a href="https://github.com/theworker02/kraftverk/blob/main/SECURITY.md">SECURITY.md</a>. Do not file public issues for privilege-escalation paths in the agent IPC design.</p>
+    </article>
+  </div>
+  <footer class="site-footer"><div class="footer-legal"><p>Copyright © <span data-year>2026</span> theworker02 · Proprietary · <a href="https://github.com/theworker02/kraftverk/blob/main/docs/safety.md">Source</a></p></div></footer>
+  <script src="../site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Optimizer — Kraftverk Docs</title>
+  <meta name="description" content="Kraftverk optimizer: safe mode allow-list, hill climbing search, apply/verify/rollback, validation gates, crash recovery." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/docs/optimizer.html" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../"><img src="../assets/mark.svg" width="28" height="28" alt="" /><span>Kraftverk</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav"><a href="./">Docs</a><a href="../download/">Download</a><a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a></nav>
+  </header>
+  <div class="docs-shell page-enter">
+    <aside class="docs-nav" aria-label="Docs">
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="./">Hub</a></li>
+        <li><a href="benchmark.html">KraftBench</a></li>
+        <li><a href="optimizer.html" aria-current="page">Optimizer</a></li>
+        <li><a href="statistics.html">Statistics</a></li>
+        <li><a href="kraft-index.html">Kraft Index</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="telemetry.html">Telemetry</a></li>
+        <li><a href="hardware-support.html">Hardware</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="contributing.html">Contributing</a></li>
+      </ul>
+    </aside>
+    <article class="docs-main">
+      <p class="crumb"><a href="./">Docs</a> / Optimizer</p>
+      <h1>Optimizer methodology</h1>
+      <p>The optimizer searches a discrete neighborhood of <strong>reversible</strong> settings, measures each candidate with KraftBench, and keeps only what passes stability and comparison gates.</p>
+
+      <h2>Mode</h2>
+      <p>Milestone 1 / current safe path supports <code>--mode safe</code> only. Balanced/Aggressive modes are rejected with a clear error rather than silently doing something else.</p>
+      <pre><code>kraftverk optimize --mode safe --goal balanced</code></pre>
+      <p>Goals include: <code>balanced</code>, <code>gaming</code>, <code>compile</code>, <code>workstation</code>, <code>throughput</code>, <code>latency</code>, <code>efficiency</code>, <code>sustained</code>, <code>quiet</code>.</p>
+
+      <h2>Safe parameters (implemented)</h2>
+      <table class="data">
+        <thead>
+          <tr><th>Key</th><th>Scope</th><th>Rollback</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>bench.worker_threads</code></td><td>Process / KraftBench workers</td><td>Yes</td></tr>
+          <tr><td><code>bench.rayon_threads</code></td><td>Local rayon pool size</td><td>Yes</td></tr>
+          <tr><td><code>process.priority</code></td><td>Current process (<code>normal</code> / <code>above_normal</code> / <code>high</code>)</td><td>Yes (best-effort)</td></tr>
+          <tr><td><code>process.affinity</code></td><td>Current process (<code>all</code> / <code>even</code> / <code>odd</code> / <code>first_half</code>)</td><td>Yes (best-effort)</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Not implemented</strong> (explicitly unsupported): GPU clocks, power plans, registry tweaks, TRIM/cleaners, other-process affinity.</p>
+
+      <h2>Search strategy</h2>
+      <ul>
+        <li>Deterministic <strong>hill climbing</strong> (<code>HillClimbStrategy</code>) with a reproducible seed</li>
+        <li>Neighborhood: discrete thread counts, priority, affinity variants</li>
+        <li>Stop conditions: max experiments, time budget, plateau limit, neighborhood exhausted, instability</li>
+      </ul>
+      <p class="fine">ε-greedy / Bayesian plugins may be listed in the architecture as future work — treat unimplemented strategies as non-claims.</p>
+
+      <h2>Lifecycle per candidate</h2>
+      <ol>
+        <li>Apply via <code>ApplyGuard</code> (writes recovery journal)</li>
+        <li>Verify each change</li>
+        <li>Measure (warm-up + samples)</li>
+        <li>Compare to baseline index samples</li>
+        <li><strong>Rollback</strong> during search</li>
+        <li>Provisional best → <strong>validation</strong> run with more samples</li>
+        <li>Accept + <code>commit</code> (keep applied) or reject + rollback</li>
+      </ol>
+
+      <pre class="mermaid">flowchart LR
+  A[Propose] --> B[Apply + journal]
+  B --> C[Measure]
+  C --> D{Better + stable?}
+  D -->|search| E[Rollback]
+  E --> A
+  D -->|validate pass| F[Commit]
+  D -->|fail| E
+</pre>
+
+      <h2>Stability gate</h2>
+      <p>Validation requires:</p>
+      <ul>
+        <li>Stability <code>PASS</code> (CoV ≤ threshold, checksums present, ≥2 samples)</li>
+        <li>Comparison class improvement (<code>LIKELY_*</code> or <code>CONFIRMED_*</code>)</li>
+      </ul>
+
+      <h2>Sessions, hot-plug, recovery</h2>
+      <p>Optimizer sessions can resume; hardware eligibility is re-checked. If a disallowed GPU appears mid-session, Kraftverk stops, restores managed config, and blocks further execution.</p>
+      <p>On launch, <code>RecoveryJournal</code> restores any interrupted apply so a crash mid-experiment does not leave the process in a mystery state.</p>
+
+      <h2>Related</h2>
+      <p><a href="statistics.html">Statistics</a> · <a href="safety.html">Safety</a> · <a href="architecture.html">Architecture</a></p>
+    </article>
+  </div>
+  <footer class="site-footer"><div class="footer-legal"><p>Copyright © <span data-year>2026</span> theworker02 · Proprietary · <a href="https://github.com/theworker02/kraftverk/blob/main/docs/optimizer.md">Source</a></p></div></footer>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+  <script src="../site.js" defer></script>
+</body>
+</html>
