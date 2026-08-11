@@ -347,7 +347,7 @@ fn reg_query_string(
     Some(String::from_utf16_lossy(&u16s))
 }
 
-// Used by Windows GPU enumeration; kept under `test` so Linux CI clippy sees the helper.
+// Used by Windows GPU enumeration; kept under `test` so Linux CI clippy/tests see the helper.
 #[cfg(any(windows, test))]
 fn parse_ven_from_pci_key(key: &str) -> Option<u16> {
     // VEN_1002&DEV_...

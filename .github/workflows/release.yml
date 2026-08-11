@@ -63,14 +63,23 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
+      - name: Generate release notes
+        shell: bash
+        run: |
+          chmod +x .github/scripts/generate-release-notes.sh
+          .github/scripts/generate-release-notes.sh "${{ github.ref_name }}" release-notes.md
+          {
+            echo ""
+            echo "---"
+            echo ""
+            echo "### Commits in this tag"
+            echo ""
+          } >> release-notes.md
       - name: GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
-          body: |
-            Proprietary software © theworker02 — All Rights Reserved.
-            See LICENSE in the archive. Modification and redistribution of modified versions require written permission.
-            AMD-exclusive (`amd-only-v1`). Not affiliated with AMD.
+          body_path: release-notes.md
           files: artifacts/**/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
