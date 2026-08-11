@@ -347,7 +347,12 @@ fn reg_query_string(
     Some(String::from_utf16_lossy(&u16s))
 }
 
+<<<<<<< HEAD
 #[cfg(windows)]
+=======
+// Used by Windows GPU enumeration; kept under `test` so Linux CI clippy sees the helper.
+#[cfg(any(windows, test))]
+>>>>>>> 30f53f7 (chore: add thanks.dev funding and fix Linux clippy dead_code)
 fn parse_ven_from_pci_key(key: &str) -> Option<u16> {
     // VEN_1002&DEV_...
     let upper = key.to_ascii_uppercase();
