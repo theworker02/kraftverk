@@ -239,10 +239,8 @@ fn set_power_scheme(scheme: &str) -> Result<()> {
                     continue;
                 }
                 let path = e.path().join("cpufreq/scaling_governor");
-                if path.exists() {
-                    if std::fs::write(&path, scheme).is_ok() {
-                        any = true;
-                    }
+                if path.exists() && std::fs::write(&path, scheme).is_ok() {
+                    any = true;
                 }
             }
         }
