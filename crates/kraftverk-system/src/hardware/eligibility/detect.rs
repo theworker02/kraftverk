@@ -347,6 +347,7 @@ fn reg_query_string(
     Some(String::from_utf16_lossy(&u16s))
 }
 
+#[cfg(windows)]
 fn parse_ven_from_pci_key(key: &str) -> Option<u16> {
     // VEN_1002&DEV_...
     let upper = key.to_ascii_uppercase();
@@ -371,6 +372,7 @@ fn parse_hex_u32(s: &str) -> Option<u32> {
 mod tests {
     use super::*;
 
+    #[cfg(windows)]
     #[test]
     fn parse_ven_key() {
         assert_eq!(
