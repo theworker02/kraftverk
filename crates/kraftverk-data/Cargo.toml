@@ -1,11 +1,17 @@
-﻿[package]
+[package]
 name = "kraftverk-data"
 description = "SQLite persistence, reports, exports, and recovery journal paths"
 version.workspace = true
 edition.workspace = true
-license.workspace = true
 rust-version.workspace = true
 authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+keywords.workspace = true
+categories.workspace = true
+license-file = "../../LICENSE"
+readme = "../../README.md"
 
 [dependencies]
 kraftverk-core = { workspace = true }

@@ -17,20 +17,25 @@ default-members = ["crates/kraftverk-cli"]
 [workspace.package]
 version = "0.2.1"
 edition = "2021"
+# Custom proprietary SPDX; each publishable crate also sets license-file = "../../LICENSE".
 license = "LicenseRef-Proprietary"
 repository = "https://github.com/theworker02/kraftverk"
 homepage = "https://theworker02.github.io/kraftverk/"
+documentation = "https://theworker02.github.io/kraftverk/"
 rust-version = "1.75"
 authors = ["theworker02"]
+keywords = ["performance", "benchmark", "amd", "optimization", "systems"]
+categories = ["development-tools", "hardware-support", "command-line-utilities"]
 
 [workspace.dependencies]
-kraftverk-core = { path = "crates/kraftverk-core" }
-kraftverk-system = { path = "crates/kraftverk-system" }
-kraftverk-bench = { path = "crates/kraftverk-bench" }
-kraftverk-optimizer = { path = "crates/kraftverk-optimizer" }
-kraftverk-data = { path = "crates/kraftverk-data" }
-kraftverk-agent = { path = "crates/kraftverk-agent" }
-kraftverk-sdk = { path = "crates/kraftverk-sdk" }
+# path + version required so `cargo publish` can resolve crates.io deps.
+kraftverk-core = { path = "crates/kraftverk-core", version = "0.2.1" }
+kraftverk-system = { path = "crates/kraftverk-system", version = "0.2.1" }
+kraftverk-bench = { path = "crates/kraftverk-bench", version = "0.2.1" }
+kraftverk-optimizer = { path = "crates/kraftverk-optimizer", version = "0.2.1" }
+kraftverk-data = { path = "crates/kraftverk-data", version = "0.2.1" }
+kraftverk-agent = { path = "crates/kraftverk-agent", version = "0.2.1" }
+kraftverk-sdk = { path = "crates/kraftverk-sdk", version = "0.2.1" }
 
 anyhow = "1"
 thiserror = "2"
