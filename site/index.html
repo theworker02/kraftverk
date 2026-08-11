@@ -4,13 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kraftverk — evidence-driven performance engineering</title>
+  <meta name="description" content="Kraftverk is an independent AMD-focused performance platform: measure, experiment, validate, improve. Proprietary software by theworker02." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <header class="top">
+    <a class="brand" href="./">
+      <img src="mark.svg" width="28" height="28" alt="" />
+      <span>Kraftverk</span>
+    </a>
+    <nav>
+      <a href="#loop">Loop</a>
+      <a href="#hardware">Hardware</a>
+      <a href="docs/">Docs</a>
+      <a href="https://github.com/theworker02/kraftverk">GitHub</a>
+    </nav>
+  </header>
+
   <header class="hero">
     <div class="hero-inner">
-      <img class="mark" src="mark.svg" width="72" height="72" alt="Kraftverk" />
+      <img class="mark" src="mark.svg" width="80" height="80" alt="Kraftverk mark" />
+      <p class="flagline">
+        <img src="swedish-flag.svg" width="22" height="14" alt="" />
+        <span>Swedish-inspired name · independent product</span>
+      </p>
       <h1>Kraftverk</h1>
       <p class="tag">Evidence-driven systems performance platform</p>
       <p class="lede">Measure real work. Experiment with reversible settings. Keep only what statistically improves. No magic buttons.</p>
@@ -22,13 +43,20 @@
     </div>
   </header>
 
+  <section id="name">
+    <h2>Name</h2>
+    <p><strong>Kraftverk</strong> is inspired by Swedish — <em>kraftverk</em> means <strong>power plant / powerhouse / power station</strong>. It is a product name only. Not affiliated with the Kingdom of Sweden or any Swedish government entity.</p>
+  </section>
+
   <section>
     <h2>No magic buttons</h2>
     <p>Kraftverk is a performance engineering system, not another PC “optimizer.” Every kept change is measured, validated, explainable, and restorable.</p>
   </section>
 
-  <section>
-    <h2>The loop</h2>
+  <section id="loop">
+    <h2>The evidence loop</h2>
+    <p class="fine">Measure → Experiment → Validate → Improve, then learn and repeat.</p>
+    <img class="diagram" src="architecture-flow.svg" width="720" height="220" alt="Architecture flow: Measure, Experiment, Validate, Improve" />
     <ol class="loop">
       <li>Measure</li>
       <li>Experiment</li>
@@ -41,21 +69,16 @@
     </ol>
   </section>
 
-  <section>
-    <h2>Illustrative improvement cascade</h2>
-    <p class="fine">Diagram is conceptual — your machine’s results come only from real KraftBench samples.</p>
-    <div class="cascade">
-      <div>Baseline Kraft Index = 10,000</div>
-      <div>→ Safe reversible candidates</div>
-      <div>→ Statistical validation</div>
-      <div>→ Accept or roll back</div>
-      <div>→ Export evidence report</div>
-    </div>
+  <section id="hardware">
+    <h2>AMD hardware only</h2>
+    <p>Policy <code>amd-only-v1</code> is a hard gate: <strong>x86/x86_64</strong> + <strong>AMD CPU</strong>; GPU optional but must be AMD if present. NVIDIA/Intel GPU configurations are rejected (exit codes 20–25).</p>
+    <p class="fine">Independent product — not affiliated with or endorsed by Advanced Micro Devices, Inc. AMD is a trademark of Advanced Micro Devices, Inc. No AMD logos are used here.</p>
+    <p><a href="docs/hardware-support.html">Hardware support details →</a></p>
   </section>
 
   <section>
     <h2>Get started</h2>
-    <pre><code>cargo install --path crates/kraftverk-cli
+    <pre><code>cargo build --release -p kraftverk-cli
 kraftverk inspect
 kraftverk baseline
 kraftverk optimize --mode safe --goal balanced
@@ -63,7 +86,13 @@ kraftverk report --format html</code></pre>
   </section>
 
   <footer>
-    <p>MIT Licensed · <a href="docs/">Documentation portal</a></p>
+    <p>
+      Copyright © 2026 <a href="https://github.com/theworker02">theworker02</a>
+      · <strong>Proprietary — All Rights Reserved</strong>
+      · <a href="https://github.com/theworker02/kraftverk/blob/main/LICENSE">LICENSE</a>
+      · <a href="docs/">Documentation</a>
+    </p>
+    <p class="fine">View/use as published. Modification and redistribution of modified versions require written permission.</p>
   </footer>
 </body>
 </html>

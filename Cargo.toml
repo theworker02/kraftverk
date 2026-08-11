@@ -17,10 +17,11 @@ default-members = ["crates/kraftverk-cli"]
 [workspace.package]
 version = "0.2.1"
 edition = "2021"
-license = "MIT"
+license = "LicenseRef-Proprietary"
 repository = "https://github.com/theworker02/kraftverk"
+homepage = "https://theworker02.github.io/kraftverk/"
 rust-version = "1.75"
-authors = ["Kraftverk Contributors"]
+authors = ["theworker02"]
 
 [workspace.dependencies]
 kraftverk-core = { path = "crates/kraftverk-core" }

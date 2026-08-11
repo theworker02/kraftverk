@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- **License**: replaced MIT with proprietary **All Rights Reserved** terms (`LicenseRef-Proprietary`). Copyright holder: **theworker02**. View/use as published; no modification or redistribution of modified versions without written permission. See [LICENSE](LICENSE).
+- README / site / docs: professional presence (Swedish etymology, architecture diagram, badges, FUNDING.yml, CODE_OF_CONDUCT).
+- Cargo workspace `license` set to `LicenseRef-Proprietary`; authors attributed to `theworker02`.
+
+> A patch release (e.g. `0.2.2`) is advisable so release artifacts and badges clearly advertise the proprietary LICENSE rather than leftover MIT packaging from `0.2.1`.
+
 ## 0.2.1 — AMD-Exclusive Hardware Enforcement
 
 ### Added

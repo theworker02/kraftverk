@@ -1,21 +1,85 @@
-MIT License
+PROPRIETARY SOFTWARE LICENSE
+All Rights Reserved
 
 Copyright (c) 2026 theworker02
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+================================================================================
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+IMPORTANT: This is NOT an open-source or permissive license (not MIT, Apache,
+BSD, GPL, or similar). Viewing this repository does not grant modification or
+redistribution rights beyond the narrow permissions below.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+================================================================================
+
+1. Ownership
+
+   The Kraftverk software, documentation, branding assets, and related materials
+   in this repository (the "Software") are the exclusive property of theworker02
+   (the "Copyright Holder"). All rights not expressly granted are reserved.
+
+2. Limited permission to use as published
+
+   Subject to these terms, you may:
+
+   - View and study the source code as published by the Copyright Holder
+   - Build and run the Software on your own machines for personal or internal
+     evaluation and use, using the unmodified source or official binaries
+     published by the Copyright Holder
+   - Cite or reference Kraftverk with attribution to the Copyright Holder
+
+3. Prohibited without prior written permission
+
+   Except as expressly allowed above, you may NOT:
+
+   - Modify the Software (including creating derivative works)
+   - Redistribute the Software, in whole or in part, whether modified or not
+   - Redistribute modified versions, forks intended for redistribution, or
+     patched builds to any third party
+   - Sublicense, sell, lease, or commercially exploit the Software
+   - Remove, obscure, or alter copyright, trademark, or license notices
+   - Use the Copyright Holder’s name, GitHub identity, or branding to imply that
+     modified versions are authorized, official, or under theworker02’s copyright
+     as a free-modification umbrella
+
+4. Contributions
+
+   Unless a separate written agreement says otherwise, any contribution
+   (including pull requests, patches, and suggestions) submitted to this
+   project is submitted for inclusion at the Copyright Holder’s sole discretion.
+   By submitting a contribution, you grant the Copyright Holder a perpetual,
+   worldwide, royalty-free, irrevocable license to use, reproduce, modify,
+   publish, and distribute that contribution as part of the Software, and you
+   represent that you have the right to grant that license. Contribution does
+   not transfer ownership of the overall Software away from the Copyright Holder,
+   and does not create a right for others to modify or redistribute the Software
+   under a permissive open-source license.
+
+5. Trademarks and affiliation
+
+   Kraftverk is an independent product. It is not affiliated with, endorsed by,
+   or sponsored by Advanced Micro Devices, Inc., the Kingdom of Sweden, or any
+   Swedish government entity. “AMD” and related marks are trademarks of their
+   respective owners. The name Kraftverk is inspired by Swedish vocabulary
+   (power plant / powerhouse / power station) and is used as a product name only.
+
+6. No warranty
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER
+   IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+7. Termination
+
+   Any violation of these terms automatically terminates the permissions granted
+   herein. Upon termination you must cease use of unauthorized copies and destroy
+   any modified versions you created without permission.
+
+8. Permission requests
+
+   For modification, redistribution, commercial licensing, or other rights not
+   granted here, contact the Copyright Holder via GitHub: https://github.com/theworker02
+
+SPDX-License-Identifier: LicenseRef-Proprietary

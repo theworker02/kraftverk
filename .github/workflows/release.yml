@@ -67,6 +67,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
+          body: |
+            Proprietary software © theworker02 — All Rights Reserved.
+            See LICENSE in the archive. Modification and redistribution of modified versions require written permission.
+            AMD-exclusive (`amd-only-v1`). Not affiliated with AMD.
           files: artifacts/**/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

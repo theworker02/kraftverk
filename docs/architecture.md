@@ -24,6 +24,8 @@ Suggested fine-grained crates were merged where boundaries were artificial for M
 
 ## Control flow
 
+Evidence loop (product framing): **Measure → Experiment → Validate → Improve** (learn / repeat). See [assets/architecture-flow.svg](../assets/architecture-flow.svg).
+
 ```
 CLI → open_session (inspect fingerprint, open DB, recover journal)
     → baseline/benchmark: KraftBench samples → Kraft Index → SQLite
