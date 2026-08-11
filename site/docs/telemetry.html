@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telemetry — Kraftverk Docs</title>
+  <meta name="description" content="Kraftverk telemetry is local and minimal. What is collected, what is explicitly unsupported, and honesty rules." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/docs/telemetry.html" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../"><img src="../assets/mark.svg" width="28" height="28" alt="" /><span>Kraftverk</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav"><a href="./">Docs</a><a href="../download/">Download</a><a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a></nav>
+  </header>
+  <div class="docs-shell page-enter">
+    <aside class="docs-nav" aria-label="Docs">
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="./">Hub</a></li>
+        <li><a href="benchmark.html">KraftBench</a></li>
+        <li><a href="optimizer.html">Optimizer</a></li>
+        <li><a href="statistics.html">Statistics</a></li>
+        <li><a href="kraft-index.html">Kraft Index</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="telemetry.html" aria-current="page">Telemetry</a></li>
+        <li><a href="hardware-support.html">Hardware</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="contributing.html">Contributing</a></li>
+      </ul>
+    </aside>
+    <article class="docs-main">
+      <p class="crumb"><a href="./">Docs</a> / Telemetry</p>
+      <h1>Telemetry</h1>
+      <p>Milestone telemetry is <strong>local</strong> and <strong>minimal</strong>. Snapshots attach to experiments for context. They are <strong>never</strong> used to invent benchmark scores.</p>
+
+      <h2>Collected</h2>
+      <ul>
+        <li>Timestamp</li>
+        <li>Process-visible CPU usage % (sysinfo)</li>
+        <li>Memory used / total</li>
+        <li>Coarse load hint (<code>low</code> / <code>moderate</code> / <code>high</code>)</li>
+      </ul>
+      <p>0.2 also expands an environmental noise model so experiments can record context without fabricating sensors.</p>
+
+      <h2>Not collected (explicitly unsupported)</h2>
+      <ul>
+        <li>Package temperature</li>
+        <li>Fan RPM</li>
+        <li>Power draw (watts)</li>
+        <li>GPU utilization / clocks</li>
+        <li>Network identities</li>
+      </ul>
+
+      <h2>Design rules</h2>
+      <ol>
+        <li>If a sensor is unavailable portably, mark it unsupported — do not invent values.</li>
+        <li>Telemetry never substitutes for KraftBench wall-clock work.</li>
+        <li>Local-first: no cloud upload path in the current product.</li>
+      </ol>
+      <p class="note">Future milestones may add optional sensor backends behind the same honesty rules.</p>
+    </article>
+  </div>
+  <footer class="site-footer"><div class="footer-legal"><p>Copyright © <span data-year>2026</span> theworker02 · Proprietary · <a href="https://github.com/theworker02/kraftverk/blob/main/docs/telemetry.md">Source</a></p></div></footer>
+  <script src="../site.js" defer></script>
+</body>
+</html>

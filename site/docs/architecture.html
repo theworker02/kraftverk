@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Architecture — Kraftverk Docs</title>
+  <meta name="description" content="Kraftverk architecture: crate layout, evidence-loop control flow, platform boundary, SQLite persistence, privilege separation." />
+  <meta name="theme-color" content="#0b0e11" />
+  <link rel="canonical" href="https://theworker02.github.io/kraftverk/docs/architecture.html" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../"><img src="../assets/mark.svg" width="28" height="28" alt="" /><span>Kraftverk</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav"><a href="./">Docs</a><a href="../download/">Download</a><a class="nav-cta" href="https://github.com/theworker02/kraftverk">GitHub</a></nav>
+  </header>
+  <div class="docs-shell page-enter">
+    <aside class="docs-nav" aria-label="Docs">
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="./">Hub</a></li>
+        <li><a href="benchmark.html">KraftBench</a></li>
+        <li><a href="optimizer.html">Optimizer</a></li>
+        <li><a href="statistics.html">Statistics</a></li>
+        <li><a href="kraft-index.html">Kraft Index</a></li>
+        <li><a href="architecture.html" aria-current="page">Architecture</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="telemetry.html">Telemetry</a></li>
+        <li><a href="hardware-support.html">Hardware</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="contributing.html">Contributing</a></li>
+      </ul>
+    </aside>
+    <article class="docs-main">
+      <p class="crumb"><a href="./">Docs</a> / Architecture</p>
+      <h1>Architecture</h1>
+      <p>Kraftverk is a Cargo workspace of first-party crates with a hard ceiling (≤10) to discourage artificial micro-crates. The product framing is the evidence loop; the implementation is a session that inspects, measures, searches, and persists.</p>
+
+      <h2>Evidence loop</h2>
+      <img class="diagram" src="../assets/architecture-flow.svg" width="720" height="220" alt="Measure → Experiment → Validate → Improve" />
+      <p class="fine">Measure → Experiment → Validate → Improve, then learn and repeat.</p>
+
+      <h2>Crate layout</h2>
+      <table class="data">
+        <thead>
+          <tr><th>Crate</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>kraftverk-core</code></td><td>Domain models, errors, stats, Kraft Index, goals/constraints</td></tr>
+          <tr><td><code>kraftverk-system</code></td><td>Platform trait, Native/Mock, recovery journal, hardware eligibility, telemetry</td></tr>
+          <tr><td><code>kraftverk-bench</code></td><td>KraftBench workloads + suite runner</td></tr>
+          <tr><td><code>kraftverk-optimizer</code></td><td>Search strategies + profile catalog</td></tr>
+          <tr><td><code>kraftverk-data</code></td><td>SQLite experiment store + reports + sessions</td></tr>
+          <tr><td><code>kraftverk-agent</code></td><td>Privileged agent IPC types (scaffold in 0.2)</td></tr>
+          <tr><td><code>kraftverk-sdk</code></td><td>Programmatic facade</td></tr>
+          <tr><td><code>kraftverk-cli</code></td><td>User-facing binary / optimize orchestration</td></tr>
+          <tr><td><code>kraftverk-desktop</code></td><td>Local engineering instrument UI</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Control flow</h2>
+      <pre><code>CLI → open_session (inspect fingerprint, open DB, recover journal)
+    → baseline/benchmark: KraftBench samples → Kraft Index → SQLite
+    → optimize: SearchStrategy proposes Candidate
+         → ApplyGuard (journal + apply/verify)
+         → KraftBench samples → compare vs baseline
+         → rollback (search) or commit (validated accept)</code></pre>
+
+      <pre class="mermaid">flowchart TB
+  CLI[kraftverk-cli] --> SYS[kraftverk-system]
+  CLI --> OPT[kraftverk-optimizer]
+  OPT --> BENCH[kraftverk-bench]
+  OPT --> SYS
+  BENCH --> CORE[kraftverk-core]
+  CLI --> DATA[kraftverk-data]
+  DESK[kraftverk-desktop] --> DATA
+  AGENT[kraftverk-agent] -.->|scaffold IPC| SYS
+</pre>
+
+      <h2>Platform boundary</h2>
+      <p>Callers never branch on OS. <code>Platform</code> (in <code>kraftverk-system</code>) exposes capabilities/topology, read/apply/verify/rollback, and a mock-only score multiplier. <code>MockPlatform</code> simulates deltas, noise, failed applies, throttling, and unsupported keys for tests.</p>
+
+      <h2>Persistence</h2>
+      <p>SQLite stores fingerprint, versions, OS info, candidate JSON, parent id, samples, stats, telemetry, stability, score, accept/reject reason, and timestamps.</p>
+
+      <h2>Privilege separation</h2>
+      <p>Safe opts run in-process today. <code>kraftverk-agent</code> defines request/response types for a future authenticated local IPC channel. Privileged agent execution remains a scaffold in 0.2 — treated as experimental, not a finished security boundary.</p>
+
+      <h2>Related</h2>
+      <p><a href="optimizer.html">Optimizer</a> · <a href="safety.html">Safety</a> · <a href="https://github.com/theworker02/kraftverk/blob/main/docs/security.md">security.md</a></p>
+    </article>
+  </div>
+  <footer class="site-footer"><div class="footer-legal"><p>Copyright © <span data-year>2026</span> theworker02 · Proprietary · <a href="https://github.com/theworker02/kraftverk/blob/main/docs/architecture.md">Source</a></p></div></footer>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+  </script>
+  <script src="../site.js" defer></script>
+</body>
+</html>
