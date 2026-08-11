@@ -227,9 +227,7 @@ fn value_to_param(v: &serde_json::Value) -> std::result::Result<ParamValue, Stri
 fn is_elevated_hint() -> bool {
     #[cfg(windows)]
     {
-        // Best-effort: trying to open a typically-admin resource is noisy; report false
-        // and let UX tell user to elevate when powercfg fails.
-        false
+        windows_is_elevated()
     }
     #[cfg(unix)]
     {
@@ -238,6 +236,46 @@ fn is_elevated_hint() -> bool {
     #[cfg(not(any(windows, unix)))]
     {
         false
+    }
+}
+
+#[cfg(windows)]
+fn windows_is_elevated() -> bool {
+    use std::mem::MaybeUninit;
+    use windows_sys::Win32::Foundation::{CloseHandle, HANDLE};
+    use windows_sys::Win32::Security::{
+        GetTokenInformation, TokenElevation, TOKEN_ELEVATION, TOKEN_QUERY,
+    };
+    use windows_sys::Win32::System::Threading::GetCurrentProcess;
+
+    #[link(name = "advapi32")]
+    extern "system" {
+        fn OpenProcessToken(
+            process_handle: HANDLE,
+            desired_access: u32,
+            token_handle: *mut HANDLE,
+        ) -> i32;
+    }
+
+    unsafe {
+        let mut token: HANDLE = std::ptr::null_mut();
+        if OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut token) == 0 {
+            return false;
+        }
+        let mut elev = MaybeUninit::<TOKEN_ELEVATION>::uninit();
+        let mut ret_len = 0u32;
+        let ok = GetTokenInformation(
+            token,
+            TokenElevation,
+            elev.as_mut_ptr() as *mut _,
+            std::mem::size_of::<TOKEN_ELEVATION>() as u32,
+            &mut ret_len,
+        );
+        let _ = CloseHandle(token);
+        if ok == 0 {
+            return false;
+        }
+        elev.assume_init().TokenIsElevated != 0
     }
 }
 

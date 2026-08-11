@@ -15,7 +15,9 @@ Kraftverk only runs on **x86 / x86_64 hosts with an AMD CPU**. See [hardware-sup
 
 `kraftverk inspect` / `kraftverk capabilities` list platform capabilities with `supported` / `partial` / `unsupported` / `requires_privilege`.
 
-Examples unsupported in 0.2: `gpu.clock`, `power.plan`, `storage.trim`, `registry.tweaks`.
+Examples unsupported in 0.2+: `gpu.clock`, `storage.trim`, `registry.tweaks`.
+`power.scheme` requires the privileged agent (`kraftverk agent serve`; elevate on Windows).
+GPU benches are real when AMD Vulkan is present; otherwise reported Unsupported.
 
 ## Fingerprint
 

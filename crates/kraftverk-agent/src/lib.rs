@@ -7,6 +7,7 @@
 mod apply;
 mod auth;
 mod client;
+mod platform;
 mod protocol;
 mod server;
 mod transport;
@@ -14,6 +15,7 @@ mod transport;
 pub use apply::PrivilegedOps;
 pub use auth::{ensure_agent_token, load_agent_token, token_path};
 pub use client::{agent_connected, connect, AgentClient};
+pub use platform::{is_privileged_key, AgentBackedPlatform};
 pub use protocol::{AgentRequest, AgentResponse, AuthChallenge, FRAME_MAGIC};
 pub use server::{run_agent_server, PrivilegedAgent};
 

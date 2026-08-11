@@ -1,6 +1,7 @@
 ﻿use std::time::Instant;
 
 use anyhow::{anyhow, Result};
+use kraftverk_agent::agent_connected;
 use kraftverk_core::candidate::Candidate;
 use kraftverk_core::config::{OptimizeConfig, OptimizeMode, RunConfig};
 use kraftverk_core::constraints::OptimizeConstraints;
@@ -39,6 +40,20 @@ pub fn run(
             "optimize mode '{}' is not available without the privileged agent",
             mode.as_str()
         ));
+    }
+
+    if agent_connected() {
+        println_human(
+            out,
+            "Privileged agent connected — elevated ops (priority/affinity/power.scheme) via IPC.",
+        );
+    } else {
+        eprintln_human(
+            out,
+            "Privileged agent not running — power.scheme unavailable; \
+             process priority/affinity use in-process best-effort. \
+             Start elevated: kraftverk agent serve",
+        );
     }
 
     let goal = OptimizeGoal::parse(goal_s).ok_or_else(|| anyhow!("unknown goal '{goal_s}'"))?;
