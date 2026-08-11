@@ -84,10 +84,11 @@ impl Capabilities {
                     notes: "Not implemented in Milestone 1.".into(),
                 },
                 Capability {
-                    id: "power.plan".into(),
-                    name: "OS power plan".into(),
+                    id: "power.scheme".into(),
+                    name: "OS power scheme / plan".into(),
                     support: FeatureSupport::RequiresPrivilege,
-                    notes: "Deferred to privileged agent (Milestone 2+).".into(),
+                    notes: "Requires kraftverk agent serve (elevated on Windows for powercfg / root on Linux for cpufreq)."
+                        .into(),
                 },
                 Capability {
                     id: "storage.trim".into(),

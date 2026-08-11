@@ -139,7 +139,17 @@ pub fn run_suite_samples(
                 m.score *= score_multiplier;
             }
         }
-        let idx = KraftIndex::from_measurements(&set, weights)?;
+        // Prefer caller weights, but enable GPU weight automatically when real
+        // AMD Vulkan measurements exist (never invent scores — only reweight).
+        let sample_weights = {
+            let auto = KraftIndexWeights::for_measurements(&set);
+            if auto.gpu > 0.0 && weights.gpu == 0.0 {
+                auto
+            } else {
+                weights.clone()
+            }
+        };
+        let idx = KraftIndex::from_measurements(&set, &sample_weights)?;
         info!(sample = i + 1, raw = idx.raw_composite, "suite sample");
         index_samples_raw.push(idx.raw_composite);
         samples.push(set);
@@ -157,7 +167,15 @@ pub fn run_suite_samples(
     let index_summary = summarize(&index_samples_normalized, &stats_cfg).ok();
 
     let final_index = if let Some(last) = samples.last() {
-        let raw = KraftIndex::from_measurements(last, weights)?;
+        let sample_weights = {
+            let auto = KraftIndexWeights::for_measurements(last);
+            if auto.gpu > 0.0 && weights.gpu == 0.0 {
+                auto
+            } else {
+                weights.clone()
+            }
+        };
+        let raw = KraftIndex::from_measurements(last, &sample_weights)?;
         if let Some(b) = baseline_raw {
             Some(raw.normalize_to_baseline(b)?)
         } else if index_summary.is_some() {

@@ -279,3 +279,48 @@ pub mod win_pipe {
 
     // send_recv helpers live on the client via write_json/read_json.
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::protocol::{AgentRequest, AgentResponse};
+    use uuid::Uuid;
+
+    #[test]
+    fn frame_json_roundtrip_mock_transport() {
+        let id = Uuid::new_v4();
+        let req = AgentRequest::Ping { id };
+        let mut buf = Vec::new();
+        write_json(&mut buf, &req).expect("write");
+        let mut cur = std::io::Cursor::new(buf);
+        let got: AgentRequest = read_json(&mut cur).expect("read");
+        match got {
+            AgentRequest::Ping { id: got_id } => assert_eq!(got_id, id),
+            other => panic!("unexpected {other:?}"),
+        }
+    }
+
+    #[test]
+    fn rejects_bad_magic() {
+        let mut bad = b"XXXX".to_vec();
+        bad.extend_from_slice(&4u32.to_le_bytes());
+        bad.extend_from_slice(b"{}");
+        let mut cur = std::io::Cursor::new(bad);
+        let err = read_frame(&mut cur).unwrap_err();
+        assert!(err.to_string().contains("magic"));
+    }
+
+    #[test]
+    fn auth_response_roundtrip() {
+        let id = Uuid::new_v4();
+        let resp = AgentResponse::Authed {
+            id,
+            agent_version: "0.2.1".into(),
+        };
+        let mut buf = Vec::new();
+        write_json(&mut buf, &resp).unwrap();
+        let mut cur = std::io::Cursor::new(buf);
+        let got: AgentResponse = read_json(&mut cur).unwrap();
+        assert!(matches!(got, AgentResponse::Authed { .. }));
+    }
+}

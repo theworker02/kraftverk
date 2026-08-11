@@ -23,6 +23,16 @@ When a reading is unavailable, snapshots leave `temp_c` / `power_w` as `null` an
 
 Inspect `kraftverk doctor` for sensor availability. See also `kraftverk inspect`.
 
+## GPU benches (KraftBench)
+
+When an AMD Vulkan device is present (`kraftverk-bench` feature `gpu`, default on Win/Linux x86_64), KraftBench runs real GPU workloads via `ash`:
+
+- Buffer copy bandwidth (`gpu.mem_copy_bandwidth`)
+- Compute throughput (`gpu.compute_throughput`)
+- XOR reduction / hash-style kernel (`gpu.reduction_hash`)
+
+Device selection prefers discrete AMD (PCI vendor `0x1002`). Results flow into the Kraft Index GPU category when measurements exist. If Vulkan or an AMD adapter is missing, the suite records an honest `Unsupported` reason and does **not** fabricate scores.
+
 ## Not collected
 
 - Fan RPM
