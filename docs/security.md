@@ -1,13 +1,13 @@
 # Security
 
-## Threat model (M1)
+## Threat model
 
 | Asset | Risk | Mitigation |
 |-------|------|------------|
 | User files | Accidental overwrite by benches | Scratch-dir only + path refuse list |
-| System config | Bad tunables | Tiny allow-list; rollback; safe mode only |
+| System config | Bad tunables | Tiny allow-list; rollback; recovery journal |
 | Privacy | Fingerprint leaking identity | Hash hostname; no MAC/serial/username |
-| Privilege abuse | Future agent misuse | Agent not operational; IPC design requires auth |
+| Privilege abuse | Agent misuse | Authenticated local IPC only; no arbitrary shell; AMD hardware gate |
 
 ## Trust boundaries
 
@@ -15,12 +15,14 @@
 [User] → kraftverk CLI (user privileges)
               │
               ├─ AMD-only hardware gate (amd-only-v1) before optimize/bench
-              ├─ in-process safe tunables
+              ├─ in-process safe tunables (bench.* / best-effort priority+affinity)
               │
-              └─ (future) authenticated IPC → kraftverk-agent (elevated; also hardware-gated)
+              └─ authenticated local IPC → kraftverk-agent
+                   (named pipe on Windows / Unix socket on Linux;
+                    shared token; allow-list: process.priority, process.affinity, power.scheme)
 ```
 
-The agent scaffold (`kraftverk-agent`) validates hardware on `PrivilegedAgent::start()` and re-checks before sensitive ops. It does not yet listen on a production socket.
+Start the agent with `kraftverk agent serve` (elevated on Windows when changing power schemes). `kraftverk agent status` and `kraftverk doctor` report connectivity. The agent re-validates `amd-only-v1` on startup and before sensitive apply/rollback.
 
 ## Hardware policy
 

@@ -1,6 +1,7 @@
 //! Shared engine: recovery, store open, suite wiring.
 
 use anyhow::{anyhow, Context, Result};
+use kraftverk_agent::AgentBackedPlatform;
 use kraftverk_bench::{run_suite_samples, BenchProgress, WorkloadConfig};
 use kraftverk_core::config::RunConfig;
 use kraftverk_core::experiment::{Decision, Experiment, ExperimentStatus, StabilityVerdict};
@@ -8,13 +9,13 @@ use kraftverk_core::kraft_index::KraftIndexWeights;
 use kraftverk_core::statistics::{compare_samples, summarize, StatsConfig};
 use kraftverk_data::{bench_scratch_dir, default_db_path, recovery_journal_path, ExperimentStore};
 use kraftverk_system::inspect_machine;
-use kraftverk_system::{detect_platform, NativePlatform, RecoveryJournal};
+use kraftverk_system::RecoveryJournal;
 
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub struct Session {
     pub store: ExperimentStore,
-    pub platform: NativePlatform,
+    pub platform: AgentBackedPlatform,
     pub journal: RecoveryJournal,
     pub report_fingerprint: String,
     pub os_info: String,
@@ -27,7 +28,7 @@ pub fn open_session() -> Result<Session> {
     let guard = kraftverk_system::SessionGuard::start().map_err(|e| anyhow!(e.to_string()))?;
     let report = inspect_machine(VERSION);
     let store = ExperimentStore::open(default_db_path()?)?;
-    let mut platform = detect_platform()?;
+    let mut platform = AgentBackedPlatform::detect().map_err(|e| anyhow!(e.to_string()))?;
     let mut journal = RecoveryJournal::open(recovery_journal_path()?)?;
 
     if let Some(id) = journal.recover_with(&mut platform)? {
@@ -72,7 +73,7 @@ impl<'a> CliProgress<'a> {
 impl BenchProgress for CliProgress<'_> {
     fn on_event(&mut self, message: &str) {
         if !self.quiet && !self.json {
-            eprintln!("â€¦ {message}");
+            eprintln!("… {message}");
         }
     }
 }
@@ -90,6 +91,7 @@ pub fn run_measured(
     score_multiplier: f64,
 ) -> Result<kraftverk_bench::SuiteResult> {
     let workload = make_workload(run)?;
+    // Suite runner upgrades to with_gpu() when real GPU measurements exist.
     let weights = KraftIndexWeights::default();
     Ok(run_suite_samples(
         run,

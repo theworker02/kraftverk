@@ -3,9 +3,9 @@
 ## Unreleased
 
 ### Added
-- **GPU benches (AMD / Vulkan)**: real `ash` backend for buffer-copy bandwidth, compute throughput, and reduction/hash-style workloads; Kraft Index GPU weight when measurements exist; honest Unsupported when no AMD Vulkan device (`kraftverk-bench` feature `gpu`, default on)
+- **GPU benches (AMD / Vulkan)**: real `ash` backend for device-local buffer-copy bandwidth, compute throughput, and XOR-reduction kernels; discrete AMD preferred (PCI 0x1002); Kraft Index GPU weight when measurements exist; honest Unsupported when no AMD Vulkan device (`kraftverk-bench` feature `gpu`, default on)
 - **OS-backed sensors**: Linux hwmon + RAPL; Windows ACPI thermal zones when present; telemetry/`--max-temp`/`--max-power` consume real readings only — never fabricated (`docs/telemetry.md`)
-- **Privileged agent (operational)**: authenticated local IPC (named pipe / Unix socket), auth token handshake, apply/verify/rollback for `process.priority`, `process.affinity`, `power.scheme`; CLI `kraftverk agent serve|status`; doctor reports agent OK/FAIL
+- **Privileged agent (operational)**: authenticated local IPC (named pipe / Unix socket), auth token handshake, apply/verify/rollback for `process.priority`, `process.affinity`, `power.scheme`; CLI optimize routes privileged keys through `AgentBackedPlatform` when the agent is connected; clear message when agent is not running; CLI `kraftverk agent serve|status`; doctor reports agent OK/FAIL; Windows elevation hint via token check
 - **Search plugins**: ε-greedy multi-armed bandit and Bayesian GP+EI strategies selectable via `optimize --strategy`
 - **Tauri desktop packaging**: optional `tauri-app` feature + `tauri.conf.json`; default remains CI-safe `web-server` axum UI
 
@@ -13,6 +13,7 @@
 - **License**: replaced MIT with proprietary **All Rights Reserved** terms (`LicenseRef-Proprietary`). Copyright holder: **theworker02**. View/use as published; no modification or redistribution of modified versions without written permission. See [LICENSE](LICENSE).
 - README / site / docs: professional presence (Swedish etymology, architecture diagram, badges, FUNDING.yml, CODE_OF_CONDUCT).
 - Cargo workspace `license` set to `LicenseRef-Proprietary`; authors attributed to `theworker02`.
+- Docs no longer describe agent/GPU as scaffold for current mainline.
 
 > Patch release `0.2.2` recommended so artifacts advertise proprietary LICENSE plus these gap fixes.
 
