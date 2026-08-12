@@ -15,7 +15,7 @@ members = [
 default-members = ["crates/kraftverk-cli"]
 
 [workspace.package]
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 # Custom proprietary SPDX; each publishable crate also sets license-file = "../../LICENSE".
 license = "LicenseRef-Proprietary"
@@ -29,13 +29,13 @@ categories = ["development-tools", "hardware-support", "command-line-utilities"]
 
 [workspace.dependencies]
 # path + version required so `cargo publish` can resolve crates.io deps.
-kraftverk-core = { path = "crates/kraftverk-core", version = "0.2.1" }
-kraftverk-system = { path = "crates/kraftverk-system", version = "0.2.1" }
-kraftverk-bench = { path = "crates/kraftverk-bench", version = "0.2.1" }
-kraftverk-optimizer = { path = "crates/kraftverk-optimizer", version = "0.2.1" }
-kraftverk-data = { path = "crates/kraftverk-data", version = "0.2.1" }
-kraftverk-agent = { path = "crates/kraftverk-agent", version = "0.2.1" }
-kraftverk-sdk = { path = "crates/kraftverk-sdk", version = "0.2.1" }
+kraftverk-core = { path = "crates/kraftverk-core", version = "0.2.2" }
+kraftverk-system = { path = "crates/kraftverk-system", version = "0.2.2" }
+kraftverk-bench = { path = "crates/kraftverk-bench", version = "0.2.2" }
+kraftverk-optimizer = { path = "crates/kraftverk-optimizer", version = "0.2.2" }
+kraftverk-data = { path = "crates/kraftverk-data", version = "0.2.2" }
+kraftverk-agent = { path = "crates/kraftverk-agent", version = "0.2.2" }
+kraftverk-sdk = { path = "crates/kraftverk-sdk", version = "0.2.2" }
 
 anyhow = "1"
 thiserror = "2"
