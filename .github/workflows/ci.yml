@@ -5,6 +5,17 @@ on:
     branches: [main, master]
   pull_request:
 
+# Hardware policy notes (amd-only-v1):
+# - GitHub-hosted runners are typically Intel CPU and often lack AMD GPUs.
+# - Unit/integration tests must NOT require live AMD hardware. The `test` step
+#   enables `kraftverk-system/mock-platform` so eligibility matrix tests inject
+#   facts via MockPlatform / evaluate_from_facts — never a production CLI flag.
+# - The `build` / `clippy` steps compile the real release gate (no mock feature).
+# - There is no `--force` / `--ignore-hardware` / KRAFTVERK_SKIP_HARDWARE_GATE
+#   switch in release binaries. Do not add one here or in release.yml.
+# - GPU benches skip cleanly when Vulkan/AMD is absent (Unsupported status).
+# See docs/hardware-support.md and DEVELOPMENT.md.
+
 jobs:
   test:
     strategy:
@@ -19,10 +30,14 @@ jobs:
           components: rustfmt, clippy
       - name: fmt
         run: cargo fmt --all -- --check
+      # Clippy without mock-platform — catches Linux-cfg type errors (e.g. sensors).
       - name: clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
+      # mock-platform: test-only feature for injected hardware facts. Not shipped
+      # as a user-facing bypass; production amd-only-v1 gate remains in release builds.
       - name: test
         run: cargo test --workspace --features kraftverk-system/mock-platform
+      # Release build keeps amd-only-v1; runners may be Intel — compile-only is fine.
       - name: build
         run: cargo build --workspace --release
 

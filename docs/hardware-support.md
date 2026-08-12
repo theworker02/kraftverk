@@ -29,7 +29,22 @@ Policy id persisted on experiments: `hardware_policy = "amd-only-v1"`.
 | 24 | Unknown CPU vendor |
 | 25 | Unsupported combination (mixed / unknown GPU / other) |
 
-There is **no** production `--force` bypass. Tests may use the `mock-platform` feature to inject hardware facts.
+There is **no** production `--force` / `--ignore-hardware` bypass, and no user-facing
+`KRAFTVERK_SKIP_HARDWARE_GATE` (or similar) env var in release builds.
+
+### CI and tests
+
+GitHub-hosted runners are usually Intel CPU (often no AMD GPU). That does **not** weaken
+`amd-only-v1` for end users:
+
+| Path | Behavior |
+|------|----------|
+| `cargo test --features kraftverk-system/mock-platform` | Injects hardware facts via MockPlatform / `evaluate_from_facts` (test harness only) |
+| `cargo clippy` / `cargo build --release` (CI) | Real gate compiled in; no mock feature |
+| GPU benches | Return `Unsupported` and skip when Vulkan/AMD is absent — never invent scores |
+| Release CLI / agent / SDK | Always evaluate live facts; Intel/NVIDIA blocked with exit codes 20–25 |
+
+See `.github/workflows/ci.yml` header comments and `DEVELOPMENT.md`.
 
 ## Detection
 
