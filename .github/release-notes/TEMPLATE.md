@@ -1,6 +1,7 @@
 # Release notes template (for humans + CI)
 
 Future tag releases should ship notes with these sections. The Release workflow
+prefers a curated `.github/release-notes/<tag>.md` when present; otherwise it
 builds a body from the matching `CHANGELOG.md` version section plus the
 boilerplate below.
 

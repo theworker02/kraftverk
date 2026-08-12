@@ -17,7 +17,7 @@
   <a href="https://github.com/theworker02/kraftverk/actions/workflows/ci.yml"><img src="https://github.com/theworker02/kraftverk/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Proprietary-red.svg" alt="License: Proprietary" /></a>
   <a href="https://github.com/theworker02/kraftverk/releases"><img src="https://img.shields.io/github/v/release/theworker02/kraftverk?display_name=tag&sort=semver" alt="Release" /></a>
-  <img src="https://img.shields.io/badge/version-0.2.1-0b0e11" alt="Version 0.2.1" />
+  <img src="https://img.shields.io/badge/version-0.2.2-0b0e11" alt="Version 0.2.2" />
   <img src="https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20(x86__64)-0b0e11" alt="Platforms: Windows | Linux x86_64" />
   <img src="https://img.shields.io/badge/hardware-AMD%20CPU%20only%20(amd--only--v1)-3d9a8b" alt="AMD-only hardware gate" />
   <a href="https://github.com/sponsors/theworker02"><img src="https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ea4aaa" alt="GitHub Sponsors" /></a>
@@ -604,17 +604,17 @@ cargo test --workspace --features kraftverk-system/mock-platform
 |-------|--------|
 | Milestone 1 — measurable foundation | Complete |
 | 0.2 expansive platform (crate consolidation, KraftBench v2, reports, desktop) | Complete |
-| Milestone 2 — agent IPC, sensors, ε-greedy/Bayesian, Tauri optional, Vulkan GPU | **Largely complete on `main` (0.2.1+)** |
+| Milestone 2 — agent IPC, sensors, ε-greedy/Bayesian, Tauri optional, Vulkan GPU | **Complete in 0.2.2** |
 | Remaining honest limits | Windows package power / AMD GPU temp without ADL unset; GPU benches need AMD Vulkan; Tauri needs WebView deps; macOS no full parity |
 | Milestone 3+ | Richer GPU suites, local regression dashboards, optional paper/CI exports |
 
 **Explicit non-roadmap:** placebo cleaners, undocumented silent tweaks, cheating benchmarks.
 
-See [docs/roadmap.md](docs/roadmap.md) · [CHANGELOG.md](CHANGELOG.md). Patch `0.2.2` is recommended when tagging proprietary LICENSE + gap-fix artifacts.
+See [docs/roadmap.md](docs/roadmap.md) · [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
-## What works on current `main` (0.2.1)
+## What works on current `main` (0.2.2)
 
 | Area | Status |
 |------|--------|

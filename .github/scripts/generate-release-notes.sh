@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Generate GitHub Release notes from CHANGELOG.md + install/hardware/license boilerplate.
+# Prefers curated .github/release-notes/<tag>.md when present.
 # Usage: generate-release-notes.sh <tag> [output-file]
 # Example: generate-release-notes.sh v0.2.2 /tmp/notes.md
 set -euo pipefail
@@ -9,6 +10,13 @@ OUT="${2:-/tmp/kraftverk-release-notes.md}"
 VERSION="${TAG#v}"
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 CHANGELOG="$ROOT/CHANGELOG.md"
+CURATED="$ROOT/.github/release-notes/${TAG}.md"
+
+if [[ -f "$CURATED" ]]; then
+  cp "$CURATED" "$OUT"
+  echo "Wrote $OUT (from curated $CURATED)"
+  exit 0
+fi
 
 if [[ ! -f "$CHANGELOG" ]]; then
   echo "CHANGELOG.md not found at $CHANGELOG" >&2
@@ -17,9 +25,11 @@ fi
 
 # Extract "## X.Y.Z — ..." section (until next ## heading)
 SECTION="$(awk -v ver="$VERSION" '
-  $0 ~ "^## " ver "([ .—–-]|$)" {capture=1}
-  capture && NR>1 && /^## / {exit}
-  capture {print}
+  /^## / {
+    if ($0 ~ "^## " ver "([ .—–-]|$)") { capture=1; print; next }
+    if (capture) exit
+  }
+  capture { print }
 ' "$CHANGELOG")"
 
 if [[ -z "${SECTION// }" ]]; then
@@ -138,12 +148,13 @@ View/use as published. **No modification or redistribution of modified versions 
 
 ## Known limitations
 
-See the changelog section for this version. Typical honest limits (confirm per tag):
+See the changelog section for this version. Remaining honest limits (confirm per tag):
 
-- GPU benchmarks unsupported
-- Portable temperature/power sensors unavailable
-- Privileged agent may still be scaffold
-- Desktop is local web UI unless a later tag ships Tauri packaging
+- GPU benches need an AMD Vulkan device (else honest Unsupported)
+- Sensors are OS-backed when present (Linux hwmon/RAPL; Windows ACPI); never fabricated
+- Privileged apply requires \`kraftverk agent serve\` with auth
+- Desktop default is local web UI; Tauri is optional (\`tauri-app\`) when packaged for that tag
+- CI may use mock-platform; production remains \`amd-only-v1\`
 
 ## Checksums
 
