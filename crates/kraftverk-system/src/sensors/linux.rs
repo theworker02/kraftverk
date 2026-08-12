@@ -95,7 +95,7 @@ fn collect_hwmon(samples: &mut Vec<SensorSample>, report: &mut SensorReport) {
         // Enumerate tempN_input
         for idx in 1..=32 {
             let input = path.join(format!("temp{idx}_input"));
-            let Ok(raw) = read_trim(&input) else {
+            let Some(raw) = read_trim(&input) else {
                 continue;
             };
             let Ok(milli) = raw.parse::<f64>() else {
@@ -119,14 +119,14 @@ fn collect_hwmon(samples: &mut Vec<SensorSample>, report: &mut SensorReport) {
         // Instantaneous power if present (powerN_input in microwatts).
         for idx in 1..=8 {
             let input = path.join(format!("power{idx}_input"));
-            let Ok(raw) = read_trim(&input) else {
+            let Some(raw) = read_trim(&input) else {
                 continue;
             };
             let Ok(uw) = raw.parse::<f64>() else {
                 continue;
             };
             let watts = uw / 1_000_000.0;
-            if !(watts >= 0.0 && watts < 2000.0) {
+            if !(0.0..2000.0).contains(&watts) {
                 continue;
             }
             let label = read_trim(path.join(format!("power{idx}_label")))
@@ -196,7 +196,7 @@ fn collect_rapl(samples: &mut Vec<SensorSample>, report: &mut SensorReport) {
             continue;
         };
         let watts = (de / 1_000_000.0) / dt; // µJ → J → W
-        if !(watts >= 0.0 && watts < 2000.0) {
+        if !(0.0..2000.0).contains(&watts) {
             continue;
         }
         samples.push(SensorSample {
