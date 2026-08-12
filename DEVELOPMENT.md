@@ -24,6 +24,21 @@ cargo fmt --all -- --check
 cargo clippy --workspace --all-targets -- -D warnings
 ```
 
+### CI vs production hardware gate
+
+GitHub Actions runners are typically Intel and may lack AMD GPUs. CI stays green without
+weakening `amd-only-v1` for users:
+
+- **Tests** enable `kraftverk-system/mock-platform` so eligibility cases use injected facts
+  (`MockPlatform` / `evaluate_from_facts`). This is a **dev/test Cargo feature**, not a
+  release CLI flag or env-var bypass.
+- **Clippy / release build** in CI compile the real gate (no mock feature).
+- **Do not** add `--force`, `--ignore-hardware`, or `KRAFTVERK_SKIP_HARDWARE_GATE` to
+  production binaries.
+- GPU benches skip cleanly when Vulkan/AMD is unavailable.
+
+Details: `docs/hardware-support.md`, `.github/workflows/ci.yml`.
+
 ## Privileged agent
 
 ```bash
