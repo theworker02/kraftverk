@@ -352,6 +352,8 @@ cargo run -p kraftverk-desktop --no-default-features --features tauri-app
 
 Same local SQLite / eligibility gate as the CLI. Hardware blockers and Safety Center live in the desktop instrument UI.
 
+Typed control client for the same HTTP API: [`packages/sdk`](packages/sdk) (`@theworker02/kraftverk-sdk`).
+
 ---
 
 ## Docs, site & releases

@@ -14,6 +14,8 @@ Thumbs.db
 .vscode/
 *.log
 /tmp/
+node_modules/
+packages/sdk/dist/
 bench_scratch/
 _archive_m1_crates/
 kraftverk-report.html
