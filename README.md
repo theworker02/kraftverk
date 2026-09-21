@@ -640,13 +640,5 @@ See [docs/roadmap.md](docs/roadmap.md) · [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-**Proprietary — All Rights Reserved.**
-Copyright © 2026 [theworker02](https://github.com/theworker02).
+**Source-available proprietary** — evaluation under [LICENSE](./LICENSE); commercial / production use via [COMMERCIAL.md](./COMMERCIAL.md). See [LICENSE_TRANSITION_NOTICE.md](./LICENSE_TRANSITION_NOTICE.md) and [NOTICE](./NOTICE).
 
-You may view and run the Software as published. **Modification, redistribution of modified versions, and sublicensing are not permitted** without explicit written permission from the Copyright Holder.
-
-SPDX: `LicenseRef-Proprietary` — full terms in [LICENSE](LICENSE).
-
-This is **not** MIT, Apache, BSD, GPL, or any permissive / copyleft open-source license. Source visibility does not grant a free-modification copyright umbrella under theworker02’s name.
-
-> **crates.io note:** Publishing under proprietary terms may be rejected or discouraged by crates.io policy. This repository does **not** silently re-license library crates. If registry publication requires an OSI-approved license, that would need an **explicit** decision from the Copyright Holder.
