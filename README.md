@@ -5,12 +5,12 @@
 <h1 align="center">
   Kraftverk
   <img src="assets/swedish-flag.svg" alt="" width="28" height="18" />
-  🇸🇪
+  ðŸ‡¸ðŸ‡ª
 </h1>
 
 <p align="center">
   <strong>Evidence-driven systems performance platform</strong><br />
-  Measure real work → experiment with reversible settings → keep only what statistically improves.
+  Measure real work â†’ experiment with reversible settings â†’ keep only what statistically improves.
 </p>
 
 <p align="center">
@@ -25,10 +25,10 @@
 </p>
 
 <p align="center">
-  <a href="https://theworker02.github.io/kraftverk/">Docs site</a> ·
-  <a href="https://github.com/theworker02/kraftverk/releases">Releases</a> ·
-  <a href="docs/hardware-support.md">Hardware support</a> ·
-  <a href="CHANGELOG.md">Changelog</a> ·
+  <a href="https://theworker02.github.io/kraftverk/">Docs site</a> Â·
+  <a href="https://github.com/theworker02/kraftverk/releases">Releases</a> Â·
+  <a href="docs/hardware-support.md">Hardware support</a> Â·
+  <a href="CHANGELOG.md">Changelog</a> Â·
   <a href="https://github.com/sponsors/theworker02">Sponsors</a>
 </p>
 
@@ -36,7 +36,7 @@
 
 ## Name & etymology
 
-**Kraftverk** is Swedish-inspired: *kraftverk* means **power plant**, **powerhouse**, or **power station** — a facility that converts energy into usable power through engineered process, not wishful thinking.
+**Kraftverk** is Swedish-inspired: *kraftverk* means **power plant**, **powerhouse**, or **power station** â€” a facility that converts energy into usable power through engineered process, not wishful thinking.
 
 That metaphor is intentional. Kraftverk treats your machine like a plant under instrumentation: measure the work, change one controllable input at a time, validate the output, and keep only what the data supports.
 
@@ -44,9 +44,9 @@ That metaphor is intentional. Kraftverk treats your machine like a plant under i
 |--|--|
 | Language cue | Swedish *kraft* (power / force) + *verk* (works / plant) |
 | Product reading | A performance **powerhouse** for AMD systems |
-| Flag | 🇸🇪 — cultural etymology only |
+| Flag | ðŸ‡¸ðŸ‡ª â€” cultural etymology only |
 
-**Independent product.** Kraftverk is **not** affiliated with, endorsed by, or sponsored by Advanced Micro Devices, Inc., the Kingdom of Sweden, or any Swedish government entity. “AMD” in this repository means CPU/GPU vendor identity detected on the host (CPUID / PCI), not a partnership claim. Kraftverk does not use AMD logos and makes no “official AMD” claim.
+**Independent product.** Kraftverk is **not** affiliated with, endorsed by, or sponsored by Advanced Micro Devices, Inc., the Kingdom of Sweden, or any Swedish government entity. â€œAMDâ€ in this repository means CPU/GPU vendor identity detected on the host (CPUID / PCI), not a partnership claim. Kraftverk does not use AMD logos and makes no â€œofficial AMDâ€ claim.
 
 ---
 
@@ -55,7 +55,7 @@ That metaphor is intentional. Kraftverk treats your machine like a plant under i
 Kraftverk is a **local-first performance engineering instrument** for **AMD** x86/x86_64 systems. It:
 
 - Discovers hardware facts and enforces an **AMD-only** eligibility gate (`amd-only-v1`)
-- Runs **KraftBench** — real, deterministic workloads with checksums where practical
+- Runs **KraftBench** â€” real, deterministic workloads with checksums where practical
 - Builds a **Kraft Index** (baseline-normalized composite score)
 - Searches **reversible** tunables (process-scoped workers, priority, affinity; privileged power schemes via agent)
 - Accepts a candidate only after **statistical validation** against the baseline
@@ -68,7 +68,7 @@ It is designed for people who want **evidence**, not marketing FPS claims.
 
 | Not this | Why it matters |
 |----------|----------------|
-| A PC “cleaner” | No temp-folder theater, no registry spray-and-pray |
+| A PC â€œcleanerâ€ | No temp-folder theater, no registry spray-and-pray |
 | A placebo FPS booster | No magic buttons; no invented scores |
 | A cloud optimization service | Telemetry and history stay on your machine |
 | An AMD-endorsed product | Independent tool; trademark disclaimer above |
@@ -92,34 +92,34 @@ flowchart LR
 ```
 
 <p align="center">
-  <img src="assets/architecture-flow.svg" alt="Measure → Experiment → Validate → Improve" width="720" />
+  <img src="assets/architecture-flow.svg" alt="Measure â†’ Experiment â†’ Validate â†’ Improve" width="720" />
 </p>
 
 **Expanded loop**
 
-1. **Measure** — KraftBench samples + telemetry snapshot
-2. **Experiment** — propose a reversible candidate (search strategy)
-3. **Apply** — journaled apply + verify
-4. **Benchmark** — re-measure under the candidate
-5. **Validate** — stability gate + comparison class vs baseline
-6. **Keep or Revert** — commit only validated accepts; otherwise rollback
-7. **Learn** — history, insights, lineage, receipts
-8. **Repeat** — until budget / plateau / neighborhood exhausted
+1. **Measure** â€” KraftBench samples + telemetry snapshot
+2. **Experiment** â€” propose a reversible candidate (search strategy)
+3. **Apply** â€” journaled apply + verify
+4. **Benchmark** â€” re-measure under the candidate
+5. **Validate** â€” stability gate + comparison class vs baseline
+6. **Keep or Revert** â€” commit only validated accepts; otherwise rollback
+7. **Learn** â€” history, insights, lineage, receipts
+8. **Repeat** â€” until budget / plateau / neighborhood exhausted
 
 ---
 
 ## Hardware policy (`amd-only-v1`)
 
-This is a **hard gate** across CLI, desktop, SDK, agent, and optimizer — not a cosmetic preference.
+This is a **hard gate** across CLI, desktop, SDK, agent, and optimizer â€” not a cosmetic preference.
 
 | Requirement | Rule |
 |-------------|------|
 | Architecture | **x86 / x86_64** only (`compile_error!` on other targets) |
 | CPU | **AMD** (`AuthenticAMD`) via CPUID |
-| GPU | None → allowed; if present, **all** must be AMD (PCI vendor `0x1002`) |
+| GPU | None â†’ allowed; if present, **all** must be AMD (PCI vendor `0x1002`) |
 | Blocked | Intel CPU; NVIDIA (`0x10DE`); Intel GPU (`0x8086`); mixed AMD+NVIDIA; unknown vendors |
 
-**Exit codes 20–25**
+**Exit codes 20â€“25**
 
 | Code | Meaning |
 |-----:|---------|
@@ -132,7 +132,7 @@ This is a **hard gate** across CLI, desktop, SDK, agent, and optimizer — not a
 
 There is **no** production `--force` bypass. Tests may inject facts via the `kraftverk-system/mock-platform` feature.
 
-**Inspect-only** (no gate — useful to explain *why* a machine is blocked):
+**Inspect-only** (no gate â€” useful to explain *why* a machine is blocked):
 
 ```bash
 kraftverk compatibility
@@ -143,7 +143,7 @@ kraftverk amd gpu
 
 Hot-plug: if an NVIDIA GPU appears mid-session, Kraftverk stops experiments, restores managed config, and blocks further execution.
 
-Full policy: [docs/hardware-support.md](docs/hardware-support.md) · platforms: [docs/platforms.md](docs/platforms.md).
+Full policy: [docs/hardware-support.md](docs/hardware-support.md) Â· platforms: [docs/platforms.md](docs/platforms.md).
 
 ---
 
@@ -160,11 +160,11 @@ KraftBench runs **real** deterministic workloads. Scores come from wall-clock ti
 | Storage | Seq/rand R/W **only** under Kraftverk scratch (never Documents/Desktop) |
 | System | Thread create, barrier sync, wake latency |
 | Realtime | Pipeline / parse / parallel stand-ins; responsiveness index |
-| GPU | AMD Vulkan via `ash` (buffer-copy bandwidth, compute, reduction/hash-style) when an AMD Vulkan device is present; otherwise **honest `Unsupported` skip** — never fabricated |
+| GPU | AMD Vulkan via `ash` (buffer-copy bandwidth, compute, reduction/hash-style) when an AMD Vulkan device is present; otherwise **honest `Unsupported` skip** â€” never fabricated |
 
 GPU benches are behind the `kraftverk-bench` feature `gpu` (**default on**). Sustained windows: `kraftverk benchmark --sustained 10m`.
 
-Methodology notes: [docs/benchmarking.md](docs/benchmarking.md) (some older “M1 unsupported GPU” lines are superseded by the Vulkan backend shipped in current `main`).
+Methodology notes: [docs/benchmarking.md](docs/benchmarking.md) (some older â€œM1 unsupported GPUâ€ lines are superseded by the Vulkan backend shipped in current `main`).
 
 ### Kraft Index
 
@@ -177,9 +177,9 @@ A **weighted composite** of category scores:
 5. Baseline mean raw composite maps to **10,000**
 6. Later runs: `index = (raw / baseline_raw) * 10000`
 
-**Default weights** (no GPU measurements): CPU 0.40 · Memory 0.20 · Storage 0.15 · System 0.10 · Realtime 0.15 · GPU 0.00
+**Default weights** (no GPU measurements): CPU 0.40 Â· Memory 0.20 Â· Storage 0.15 Â· System 0.10 Â· Realtime 0.15 Â· GPU 0.00
 
-**With real GPU measurements** (`KraftIndexWeights::with_gpu`): CPU 0.34 · Memory 0.17 · Storage 0.13 · System 0.09 · Realtime 0.12 · GPU 0.15
+**With real GPU measurements** (`KraftIndexWeights::with_gpu`): CPU 0.34 Â· Memory 0.17 Â· Storage 0.13 Â· System 0.09 Â· Realtime 0.12 Â· GPU 0.15
 
 Details: [docs/kraft-index.md](docs/kraft-index.md).
 
@@ -187,7 +187,7 @@ Details: [docs/kraft-index.md](docs/kraft-index.md).
 
 Per-sample summaries include mean, median, CoV, percentiles, and approximate CIs. Candidate vs baseline comparison classes:
 
-`CONFIRMED_IMPROVEMENT` · `LIKELY_IMPROVEMENT` · `NO_SIGNIFICANT_CHANGE` · `LIKELY_REGRESSION` · `CONFIRMED_REGRESSION` · `UNSTABLE_RESULT`
+`CONFIRMED_IMPROVEMENT` Â· `LIKELY_IMPROVEMENT` Â· `NO_SIGNIFICANT_CHANGE` Â· `LIKELY_REGRESSION` Â· `CONFIRMED_REGRESSION` Â· `UNSTABLE_RESULT`
 
 These are **decision aids**, not formal lab hypothesis tests. See [docs/statistics.md](docs/statistics.md).
 
@@ -209,7 +209,7 @@ kraftverk optimize --mode aggressive --goal throughput
 | `balanced` | Broader reversible search within safe knobs |
 | `aggressive` | Widest reversible search; still no irreversible firmware |
 
-**Goals:** `balanced` · `gaming` · `compile` · `workstation` · `throughput` · `latency` · `efficiency` · `sustained` · `quiet`
+**Goals:** `balanced` Â· `gaming` Â· `compile` Â· `workstation` Â· `throughput` Â· `latency` Â· `efficiency` Â· `sustained` Â· `quiet`
 
 ### Search strategies
 
@@ -222,7 +222,7 @@ kraftverk optimize --strategy bayesian
 | Strategy | Behavior |
 |----------|----------|
 | `hill-climb` | Deterministic neighborhood climb (default family; seedable) |
-| `epsilon-greedy` | ε-greedy multi-armed bandit with decay |
+| `epsilon-greedy` | Îµ-greedy multi-armed bandit with decay |
 | `bayesian` | Gaussian-process style + expected improvement |
 
 Also: `--seed`, `--max-experiments`, `--time-budget-secs`, `--max-temp`, `--max-power`, `--max-workers`, `--resume <session-id>`.
@@ -230,14 +230,14 @@ Also: `--seed`, `--max-experiments`, `--time-budget-secs`, `--max-temp`, `--max-
 ### Safety mechanics
 
 - **Allow-listed parameters only** for in-process safe tuning (`bench.worker_threads`, `bench.rayon_threads`, `process.priority`, `process.affinity`)
-- **Apply → verify → rollback** with a recovery journal (`ApplyGuard`)
+- **Apply â†’ verify â†’ rollback** with a recovery journal (`ApplyGuard`)
 - Search iterations **roll back**; only validated accepts remain applied
 - `kraftverk restore` / `kraftverk restore --baseline` clears active accepted config
 - Crash recovery restores interrupted applies on launch
 - Storage benches refuse user content roots
 - Optimizer `--max-temp` / `--max-power` enforce only when real sensor readings exist
 
-See [docs/safety.md](docs/safety.md) · [docs/optimizer.md](docs/optimizer.md).
+See [docs/safety.md](docs/safety.md) Â· [docs/optimizer.md](docs/optimizer.md).
 
 ### Evidence artifacts
 
@@ -253,19 +253,19 @@ kraftverk analyze recent
 
 ---
 
-## Architecture (≤10 first-party crates)
+## Architecture (â‰¤10 first-party crates)
 
 ```
 crates/
-├── kraftverk-core/       # Domain models, stats, Kraft Index, goals/constraints
-├── kraftverk-system/     # Platform + hardware eligibility + sensors/telemetry
-├── kraftverk-bench/      # KraftBench workloads (CPU… + optional AMD Vulkan GPU)
-├── kraftverk-optimizer/  # Search strategies, profiles, objectives
-├── kraftverk-data/       # SQLite store, reports, receipts, sessions
-├── kraftverk-agent/      # Privileged agent + authenticated local IPC
-├── kraftverk-sdk/        # Stable facade re-exports for integrations
-├── kraftverk-cli/        # `kraftverk` binary
-└── kraftverk-desktop/    # Desktop instrument (web UI default; Tauri optional)
+â”œâ”€â”€ kraftverk-core/       # Domain models, stats, Kraft Index, goals/constraints
+â”œâ”€â”€ kraftverk-system/     # Platform + hardware eligibility + sensors/telemetry
+â”œâ”€â”€ kraftverk-bench/      # KraftBench workloads (CPUâ€¦ + optional AMD Vulkan GPU)
+â”œâ”€â”€ kraftverk-optimizer/  # Search strategies, profiles, objectives
+â”œâ”€â”€ kraftverk-data/       # SQLite store, reports, receipts, sessions
+â”œâ”€â”€ kraftverk-agent/      # Privileged agent + authenticated local IPC
+â”œâ”€â”€ kraftverk-sdk/        # Stable facade re-exports for integrations
+â”œâ”€â”€ kraftverk-cli/        # `kraftverk` binary
+â””â”€â”€ kraftverk-desktop/    # Desktop instrument (web UI default; Tauri optional)
 ```
 
 ```mermaid
@@ -289,9 +289,9 @@ flowchart TB
   CLI -.->|IPC| AGENT
 ```
 
-Control flow (simplified): CLI opens a session (fingerprint, DB, journal recovery) → baseline/benchmark → optimize proposes candidates → ApplyGuard → measure → compare → rollback or commit.
+Control flow (simplified): CLI opens a session (fingerprint, DB, journal recovery) â†’ baseline/benchmark â†’ optimize proposes candidates â†’ ApplyGuard â†’ measure â†’ compare â†’ rollback or commit.
 
-More: [docs/architecture.md](docs/architecture.md) · diagram asset: [assets/architecture-flow.svg](assets/architecture-flow.svg).
+More: [docs/architecture.md](docs/architecture.md) Â· diagram asset: [assets/architecture-flow.svg](assets/architecture-flow.svg).
 
 ---
 
@@ -305,9 +305,9 @@ Binary name: **`kraftverk`**. Global flags: `--json`, `-q` / `--quiet`, `-v` / `
 | `compatibility` | Inspect-only AMD compatibility report (no gate) |
 | `hardware` | Inspect-only CPU/GPU inventory (CPUID + PCI) |
 | `amd cpu` / `amd gpu` | AMD capability surfaces (honest unset when unknown) |
-| `baseline` | Create baseline Kraft Index (→ 10,000) |
+| `baseline` | Create baseline Kraft Index (â†’ 10,000) |
 | `benchmark` | Run KraftBench without creating a baseline (`--sustained`) |
-| `optimize` | Search + validate (`--mode`, `--goal`, `--strategy`, …) |
+| `optimize` | Search + validate (`--mode`, `--goal`, `--strategy`, â€¦) |
 | `status` | Current status, baseline, active candidate |
 | `history` | Recent experiments |
 | `explain <id>` | Explain an experiment (prefix ok) |
@@ -341,7 +341,7 @@ Default build is a **local axum web UI** (CI-safe; no WebView SDK required):
 
 ```bash
 cargo run -p kraftverk-desktop
-# → http://127.0.0.1:47821/
+# â†’ http://127.0.0.1:47821/
 ```
 
 Optional **Tauri** native shell (feature `tauri-app`; requires WebView2 on Windows / webkit2gtk on Linux):
@@ -363,7 +363,7 @@ Typed control client for the same HTTP API: [`packages/sdk`](packages/sdk) (`@th
 | Product / docs site | [https://theworker02.github.io/kraftverk/](https://theworker02.github.io/kraftverk/) |
 | GitHub Releases | [https://github.com/theworker02/kraftverk/releases](https://github.com/theworker02/kraftverk/releases) |
 | Changelog | [CHANGELOG.md](CHANGELOG.md) |
-| Development | [DEVELOPMENT.md](DEVELOPMENT.md) · [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) |
+| Development | [DEVELOPMENT.md](DEVELOPMENT.md) Â· [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) |
 | Doc index | [docs/](docs/) |
 | API stability | [docs/api-stability.md](docs/api-stability.md) |
 | Roadmap | [docs/roadmap.md](docs/roadmap.md) |
@@ -383,7 +383,7 @@ Official release targets are **AMD-capable x86_64 Windows and Linux** only.
 
 ### Build from source
 
-Prerequisites: **Rust 1.75+**, Windows or Linux x86_64 (macOS: inspect/bench only — no full parity claim).
+Prerequisites: **Rust 1.75+**, Windows or Linux x86_64 (macOS: inspect/bench only â€” no full parity claim).
 
 ```bash
 git clone https://github.com/theworker02/kraftverk.git
@@ -399,7 +399,7 @@ Install the CLI binary onto your Cargo bin path:
 cargo install --path crates/kraftverk-cli
 ```
 
-Library crates may also be consumed from a git dependency or (when published) crates.io — see [License](#license) for proprietary terms.
+Library crates may also be consumed from a git dependency or (when published) crates.io â€” see [License](#license) for proprietary terms.
 
 ---
 
@@ -456,24 +456,24 @@ cargo run -p kraftverk-desktop
 
 ## Example session (illustrative)
 
-> **Labeled illustrative output** — values vary by machine, suite version, and seed. Not a guarantee of improvement.
+> **Labeled illustrative output** â€” values vary by machine, suite version, and seed. Not a guarantee of improvement.
 
 ```text
 $ kraftverk compatibility
 policy: amd-only-v1
 status: supported
 cpu: AuthenticAMD
-gpu: AMD (0x1002) × 1
+gpu: AMD (0x1002) Ã— 1
 
 $ kraftverk baseline --samples 5 --seed 42
 baseline kraft_index: 10000.0
 raw_composite: 1.000 (normalized)
-categories: cpu=… memory=… storage=… system=… realtime=… gpu=skipped(Unsupported: no AMD Vulkan)
+categories: cpu=â€¦ memory=â€¦ storage=â€¦ system=â€¦ realtime=â€¦ gpu=skipped(Unsupported: no AMD Vulkan)
 
 $ kraftverk optimize --mode safe --goal balanced --strategy hill-climb --max-experiments 8
-session: 7f3a…
-candidate: bench.worker_threads 8→12
-decision: LIKELY_IMPROVEMENT → validating…
+session: 7f3aâ€¦
+candidate: bench.worker_threads 8â†’12
+decision: LIKELY_IMPROVEMENT â†’ validatingâ€¦
 validation: CONFIRMED_IMPROVEMENT (stability PASS)
 accepted: kept applied; receipt written
 
@@ -495,9 +495,9 @@ Telemetry is **local**, **minimal**, and **never invents** temperatures, watts, 
 
 | Reading | Linux | Windows |
 |---------|-------|---------|
-| CPU package / die temp | hwmon (`k10temp`, `zenpower`, …) | ACPI thermal zones (WMI); OEM-dependent |
+| CPU package / die temp | hwmon (`k10temp`, `zenpower`, â€¦) | ACPI thermal zones (WMI); OEM-dependent |
 | AMD GPU temp | `amdgpu` hwmon when present | Not linked via ADL; unset unless OS exposes a zone |
-| Package power | RAPL energy deltas / hwmon power | **Limited** — no portable free API; remains unset |
+| Package power | RAPL energy deltas / hwmon power | **Limited** â€” no portable free API; remains unset |
 
 Unavailable readings stay `null` with a reason. See [docs/telemetry.md](docs/telemetry.md) and `kraftverk doctor`.
 
@@ -507,7 +507,7 @@ Unavailable readings stay `null` with a reason. See [docs/telemetry.md](docs/tel
 
 ## Profiles, chase, reports
 
-**Profiles** — named goal/mode packages and `.kraft` JSON documents:
+**Profiles** â€” named goal/mode packages and `.kraft` JSON documents:
 
 ```bash
 kraftverk profiles
@@ -519,7 +519,7 @@ kraftverk profile validate <path>
 kraftverk profile apply <path>
 ```
 
-**Chase** — time an external command under Kraftverk’s harness:
+**Chase** â€” time an external command under Kraftverkâ€™s harness:
 
 ```bash
 kraftverk chase --samples 3 -- cargo build --release
@@ -542,22 +542,22 @@ kraftverk analyze recent
 
 The **privileged agent** is operational on current `main`:
 
-- CLI: `kraftverk agent serve` · `kraftverk agent status`
+- CLI: `kraftverk agent serve` Â· `kraftverk agent status`
 - Authenticated **local IPC only** (Windows named pipe `\\.\pipe\kraftverk-agent`; Linux Unix socket under the Kraftverk data dir)
 - Auth token under app data `agent/auth.token`
 - Allow-listed elevated ops include `process.priority`, `process.affinity`, `power.scheme`
 - Hardware eligibility re-checked on start and before sensitive ops
 - `kraftverk doctor` reports agent OK/FAIL
 
-Trust boundary: user-privilege CLI for safe knobs; elevated changes go through the authenticated agent — **no network bind**.
+Trust boundary: user-privilege CLI for safe knobs; elevated changes go through the authenticated agent â€” **no network bind**.
 
-Reporting: private GitHub security advisory on [theworker02/kraftverk](https://github.com/theworker02/kraftverk) — see [SECURITY.md](SECURITY.md) and [docs/security.md](docs/security.md).
+Reporting: private GitHub security advisory on [theworker02/kraftverk](https://github.com/theworker02/kraftverk) â€” see [SECURITY.md](SECURITY.md) and [docs/security.md](docs/security.md).
 
 ---
 
 ## Branding
 
-Geometric turbine / optimization-loop mark — engineering aesthetic, not gamer lightning.
+Geometric turbine / optimization-loop mark â€” engineering aesthetic, not gamer lightning.
 
 | Asset | Path |
 |-------|------|
@@ -584,11 +584,11 @@ Configured in [`.github/FUNDING.yml`](.github/FUNDING.yml).
 
 ## Contributing & community
 
-- [CONTRIBUTING.md](CONTRIBUTING.md) — evidence-only rules, AMD gate preservation, conventional commits
+- [CONTRIBUTING.md](CONTRIBUTING.md) â€” evidence-only rules, AMD gate preservation, conventional commits
 - [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 - [SECURITY.md](SECURITY.md)
 
-By submitting a contribution you grant the Copyright Holder rights to include it under the project’s **proprietary** terms (see LICENSE). Opening a PR does **not** re-license the project.
+By submitting a contribution you grant the Copyright Holder rights to include it under the projectâ€™s **proprietary** terms (see LICENSE). Opening a PR does **not** re-license the project.
 
 Typical checks:
 
@@ -604,15 +604,15 @@ cargo test --workspace --features kraftverk-system/mock-platform
 
 | Phase | Status |
 |-------|--------|
-| Milestone 1 — measurable foundation | Complete |
+| Milestone 1 â€” measurable foundation | Complete |
 | 0.2 expansive platform (crate consolidation, KraftBench v2, reports, desktop) | Complete |
-| Milestone 2 — agent IPC, sensors, ε-greedy/Bayesian, Tauri optional, Vulkan GPU | **Complete in 0.2.2** |
+| Milestone 2 â€” agent IPC, sensors, Îµ-greedy/Bayesian, Tauri optional, Vulkan GPU | **Complete in 0.2.2** |
 | Remaining honest limits | Windows package power / AMD GPU temp without ADL unset; GPU benches need AMD Vulkan; Tauri needs WebView deps; macOS no full parity |
 | Milestone 3+ | Richer GPU suites, local regression dashboards, optional paper/CI exports |
 
 **Explicit non-roadmap:** placebo cleaners, undocumented silent tweaks, cheating benchmarks.
 
-See [docs/roadmap.md](docs/roadmap.md) · [CHANGELOG.md](CHANGELOG.md).
+See [docs/roadmap.md](docs/roadmap.md) Â· [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
@@ -628,10 +628,10 @@ See [docs/roadmap.md](docs/roadmap.md) · [CHANGELOG.md](CHANGELOG.md).
 | Sensors (Linux hwmon/RAPL; Windows ACPI thermal) | OS-backed when present; power limited on Windows; never fabricated |
 | `baseline` / `benchmark [--sustained]` | Working |
 | `optimize` goals, constraints, sessions/resume, hot-plug recheck | Working |
-| Search: hill-climb / ε-greedy / Bayesian | Working (`--strategy`) |
+| Search: hill-climb / Îµ-greedy / Bayesian | Working (`--strategy`) |
 | `history` / `explain` / `compare` / `lineage` / `insights` | Working |
 | `profile` export/inspect/apply/validate/recommend | Working |
-| `report` html/json · `receipt` · `chase` / `analyze` | Working |
+| `report` html/json Â· `receipt` Â· `chase` / `analyze` | Working |
 | Desktop web UI | Working (default) |
 | Tauri native shell | Optional (`--features tauri-app`) |
 | Privileged agent (`agent serve\|status`, IPC auth) | Working |
@@ -640,7 +640,7 @@ See [docs/roadmap.md](docs/roadmap.md) · [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-**Source-available proprietary** — evaluation under [LICENSE](./LICENSE); commercial / production use via [COMMERCIAL.md](./COMMERCIAL.md). See [LICENSE_TRANSITION_NOTICE.md](./LICENSE_TRANSITION_NOTICE.md) and [NOTICE](./NOTICE).
+**Source-available proprietary** â€” evaluation under [LICENSE](./LICENSE); commercial / production use via [COMMERCIAL.md](./COMMERCIAL.md). See [LICENSE_TRANSITION_NOTICE.md](./LICENSE_TRANSITION_NOTICE.md) and [NOTICE](./NOTICE).
 
 
 ---
@@ -648,3 +648,7 @@ See [docs/roadmap.md](docs/roadmap.md) · [CHANGELOG.md](CHANGELOG.md).
 ## License & acquisition
 
 This project is **proprietary**. Production use, redistribution, and commercial deployment require a written commercial license or completed acquisition. See [LICENSE](./LICENSE) and [ACQUISITION.md](./ACQUISITION.md). Contact [@theworker02](https://github.com/theworker02).
+
+## Acquisition diligence
+
+Buyer-facing diligence materials live in [docs/acquisition/](./docs/acquisition/). Commercial licensing contact path: [COMMERCIAL.md](./COMMERCIAL.md).
