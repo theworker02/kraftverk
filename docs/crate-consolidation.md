@@ -1,4 +1,4 @@
-﻿# Crate consolidation (0.2.0)
+# Crate consolidation (0.2.0)
 
 Milestone 1 shipped 10 crates. Expansive Platform Phase consolidates to ≤10 meaningful crates:
 

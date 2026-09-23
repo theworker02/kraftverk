@@ -1,4 +1,4 @@
-﻿{
+{
     "name":  "@theworker02/kraftverk-sdk",
     "version":  "0.1.0",
     "description":  "Typed control client for the Kraftverk desktop HTTP API",
