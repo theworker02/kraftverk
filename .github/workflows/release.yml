@@ -53,7 +53,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kraftverk-${{ matrix.target }}
-          path: dist/*
+          path: |
+            dist/*.tar.gz
+            dist/*.tar.gz.sha256
+            dist/*.zip
+            dist/*.zip.sha256
 
   publish:
     needs: release
@@ -80,6 +84,10 @@ jobs:
         with:
           generate_release_notes: true
           body_path: release-notes.md
-          files: artifacts/**/*
+          files: |
+            artifacts/**/*.tar.gz
+            artifacts/**/*.tar.gz.sha256
+            artifacts/**/*.zip
+            artifacts/**/*.zip.sha256
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
